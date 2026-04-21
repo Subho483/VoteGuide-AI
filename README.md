@@ -71,6 +71,9 @@ Understand key milestones and deadlines visually.
 ## 📍 Polling Location Section
 Integrated Google Maps embed for location awareness.
 
+## 🚧 Smart Polling Booth Finder (Premium Preview)
+A simulated roadmap preview demonstrating how users will soon be able to input their EPIC/Voter ID to securely fetch their exact booth and launch native GPS directions directly to the door.
+
 ## 🎨 Premium UI/UX
 - Glassmorphism design
 - Responsive layout
