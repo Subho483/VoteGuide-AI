@@ -4,7 +4,7 @@
  */
 
 // NOTE: For live Gemini usage, insert key here. Else it will use local intelligence.
-const GEMINI_API_KEY = ""; 
+const GEMINI_API_KEY = "AIzaSyB74joiTnvJQgO9wqzi7UrCm6WhPHMxA1E"; 
 
 document.addEventListener('DOMContentLoaded', () => {
     
