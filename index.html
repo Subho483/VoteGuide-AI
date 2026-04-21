@@ -27,6 +27,7 @@
             <!-- Google Translate Placeholder -->
             <div id="google_translate_element"></div>
             <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+            <button id="a11y-toggle" aria-label="Toggle Accessibility Mode" title="Accessibility Mode">♿</button>
             <button class="hamburger" id="hamburger-menu" aria-label="Menu">☰</button>
         </div>
     </nav>
@@ -39,6 +40,7 @@
             <div class="hero-buttons">
                 <a href="#eligibility" class="btn primary-btn">Get Started</a>
                 <a href="#process" class="btn secondary-btn">Explore Process</a>
+                <button id="reminder-btn" class="btn secondary-btn">⏰ Remind Me</button>
             </div>
             <div class="progress-container">
                 <p>Civic Knowledge Progress: <span id="progress-text">0%</span></p>
@@ -196,9 +198,14 @@
         
         <div class="map-container glass-panel">
             <h2>Find Polling Location</h2>
-            <p>Example using Google Maps Embed API</p>
-            <!-- Use Election Commission Kolkata for localized demo -->
+            <p>Search your area or pincode to discover likely polling booth zones.</p>
+            <div class="pincode-search" style="margin-bottom: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <input type="text" id="pincode-input" placeholder="e.g. 700001 or Kolkata" style="flex:1; min-width:200px; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg-main); color: var(--text-main);">
+                <button id="pincode-btn" class="btn primary-btn">Search</button>
+            </div>
+            <!-- Dynamic map embed -->
             <iframe 
+                id="map-iframe"
                 src="https://maps.google.com/maps?q=Election+Commission+Kolkata&t=&z=13&ie=UTF8&iwloc=&output=embed" 
                 width="100%" 
                 height="300" 
@@ -222,6 +229,31 @@
                 <button class="btn secondary-btn quiz-btn" data-correct="true">No</button>
             </div>
             <div id="quiz-result" class="result-box hidden"></div>
+        </div>
+    </section>
+
+    <!-- Fake News Awareness Section -->
+    <section id="awareness" class="awareness-section">
+        <div class="section-header">
+            <h2>🚨 Fake News Awareness</h2>
+            <p>Misinformation damages democracy. Learn how to identify and stop it.</p>
+        </div>
+        <div class="cards-grid">
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">🏛️</div>
+                <h3>Official Sources Only</h3>
+                <p style="margin-top:0.5rem">Always verify election news and dates directly with the official Election Commission portal. Avoid forwarding WhatsApp rumors.</p>
+            </div>
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">🕵️</div>
+                <h3>Cross-Check Fact-checkers</h3>
+                <p style="margin-top:0.5rem">If a claim seems outrageous, check reputable fact-checking platforms. Be cautious of emotionally manipulative headlines.</p>
+            </div>
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">📸</div>
+                <h3>Beware Fake Media</h3>
+                <p style="margin-top:0.5rem">Photos and audio can be artificially generated (Deepfakes). Pay attention to irregularities and seek original video contexts.</p>
+            </div>
         </div>
     </section>
 

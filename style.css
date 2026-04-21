@@ -143,11 +143,30 @@ section {
     align-items: center;
     gap: 1rem;
 }
-#theme-toggle {
+#theme-toggle, #a11y-toggle {
     background: none;
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
+}
+/* Accessibility Mode Overrides */
+body.a11y-mode {
+    font-size: 115%;
+    --primary-color: #0000bb;
+    --text-muted: #111;
+    --bg-main: #fff;
+    --glass-bg: rgba(255, 255, 255, 0.95);
+}
+body.a11y-mode.dark-mode {
+    --bg-main: #000;
+    --text-main: #fff;
+    --primary-color: #ffff00;
+    --text-muted: #ddd;
+    --glass-bg: rgba(0, 0, 0, 0.95);
+}
+body.a11y-mode .btn {
+    border: 3px solid var(--primary-color);
+    font-weight: 800;
 }
 .hamburger {
     display: none;

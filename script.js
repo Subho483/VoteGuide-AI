@@ -40,6 +40,56 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
     }
 
+    // =============== Accessibility Toggle ===============
+    const a11yBtn = document.getElementById('a11y-toggle');
+    if (a11yBtn) {
+        if (localStorage.getItem('a11y') === 'true') {
+            body.classList.add('a11y-mode');
+        }
+        a11yBtn.addEventListener('click', () => {
+            body.classList.toggle('a11y-mode');
+            localStorage.setItem('a11y', body.classList.contains('a11y-mode'));
+        });
+    }
+
+    // =============== Reminder Generator ===============
+    const reminderBtn = document.getElementById('reminder-btn');
+    if (reminderBtn) {
+        reminderBtn.addEventListener('click', () => {
+            const icsContent = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//VoteGuide AI//EN\nBEGIN:VEVENT\nSUMMARY:Election Day Reminder\nDESCRIPTION:Don't forget to cast your vote today! Check your polling booth via VoteGuide AI.\nDTSTART;VALUE=DATE:20261103\nEND:VEVENT\nEND:VCALENDAR";
+            const blob = new Blob([icsContent], { type: 'text/calendar' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Election_Reminder.ics';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            const originalText = reminderBtn.innerHTML;
+            reminderBtn.innerHTML = '✅ Saved!';
+            setTimeout(() => reminderBtn.innerHTML = originalText, 3000);
+        });
+    }
+
+    // =============== Pincode Search ===============
+    const pincodeBtn = document.getElementById('pincode-btn');
+    const pincodeInput = document.getElementById('pincode-input');
+    const mapIframe = document.getElementById('map-iframe');
+    
+    if (pincodeBtn && pincodeInput && mapIframe) {
+        pincodeBtn.addEventListener('click', () => {
+            const val = pincodeInput.value.trim();
+            if (val) {
+                mapIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(val)}+Polling+Booth&t=&z=14&ie=UTF8&output=embed`;
+            }
+        });
+        pincodeInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') pincodeBtn.click();
+        });
+    }
+
     // =============== Progress Tracker & State ===============
     const progressFill = document.getElementById('progress-fill');
     const progressText = document.getElementById('progress-text');
@@ -214,29 +264,42 @@ document.addEventListener('DOMContentLoaded', () => {
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 
+    let lastContext = ""; // For smarter chatbot memory
+
     // Dual Mode: Uses Gemini if key present, else local intent matching.
     async function getBotResponse(prompt) {
         const p = prompt.toLowerCase();
         
         // Local Smart Logic Matcher (Fallback & Lightweight)
         if (!GEMINI_API_KEY) {
+            let response = "";
             if (p.includes('18') && (p.includes('vote') || p.includes('how'))) {
-                 return "Welcome to adulthood! Since you're 18, check the Eligibility tool. You need to Register first (Step 1). Keep an ID handy!";
+                 response = "Welcome to adulthood! Since you're 18, check the Eligibility tool. You need to Register first (Step 1). Keep an ID handy!";
+                 lastContext = "registration";
+            } else if (lastContext === "registration" && (p.includes('what next') || p.includes('then what') || p.includes('after'))) {
+                 response = "After you register, wait for your Voter ID. On Election day, you head to the polling booth on the Map to cast your vote!";
+                 lastContext = "voting";
             } else if (p.includes('17') || p.includes('underage')) {
-                 return "You're almost there! You can't vote yet, but you can learn the process. Some regions allow pre-registration at 17.";
+                 response = "You're almost there! You can't vote yet, but you can learn the process. Some regions allow pre-registration at 17.";
+                 lastContext = "underage";
             } else if (p.includes('missed') && p.includes('registration')) {
-                 return "If you missed registration, check if your state allows 'Same-Day Voter Registration' options or wait for the next electoral roll revision block.";
+                 response = "If you missed registration, check if your state allows 'Same-Day Voter Registration' options or wait for the next electoral roll revision block.";
+            } else if (p.includes('fake') || p.includes('news')) {
+                 response = "Misinformation is rampant! Always rely on the official Election Commission websites and trust verified fact-checkers.";
             } else if (p.includes('after voting') || p.includes('what happens')) {
-                 return "After voting, EVMs/Ballots are secured in a strong room. On Counting Day, they are calculated under CCTV surveillance to declare Results.";
+                 response = "After voting, EVMs/Ballots are secured in a strong room. On Counting Day, they are calculated under CCTV surveillance to declare Results.";
             } else if (p.includes('first time')) {
-                 return "Hi first-timer! 1) Check Eligibility 2) Register 3) Find polling booth on Maps. Don't worry, it's very simple on the day!";
+                 response = "Hi first-timer! 1) Check Eligibility 2) Register 3) Find polling booth on Maps. Don't worry, it's very simple on the day!";
+                 lastContext = "first-time";
             } else if (p.includes('elderly') || p.includes('old') || p.includes('senior')) {
-                 return "For elderly voters, the commission provides priority lines, pick-up facilities in some cities, and postal ballot options. Speak to the local booth officer.";
+                 response = "For elderly voters, the commission provides priority lines, pick-up facilities in some cities, and postal ballot options. Speak to the local booth officer.";
             } else if (p.includes('hello') || p.includes('hi')) {
-                 return "Hello! I am your civic assistant. Ask me about registration, voting days, or eligibility.";
+                 response = "Hello! I am your civic assistant. Ask me about registration, voting days, or eligibility.";
             } else {
-                 return "I'm not exactly sure, but you can check our Process map or FAQ section. (Add a Gemini API key for smarter AI responses!)";
+                 response = "I'm not exactly sure, but you can check our Process map or FAQ section. (Add a Gemini API key for smarter AI responses!)";
+                 lastContext = "";
             }
+            return response;
         }
 
         // Optional Gemini Integration Mode
