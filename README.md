@@ -174,10 +174,10 @@ gcloud run deploy voteguide-ai \
 
 # 🔒 Security Notes
 
-* Lightweight frontend-first architecture
-* Optional Gemini API integration
-* Fallback chatbot logic works without external API
-* Public demo optimized for hackathon usage
+* **Secured API Hub**: The Gemini AI API key is safely secured within a local Node.js Express Backend Proxy.
+* **No Frontend Secrets**: The frontend JavaScript (`scripts.js`) never exposes any API keys or secrets to the browser.
+* **Cloud Run Environment Integrated**: Utilizes `gcloud` `--set-env-vars` commands to safely inject the `GEMINI_API_KEY` straight into the cloud container.
+* Fallback deterministic chatbot logic remains completely operational even if no API keys are loaded.
 
 ---
 
