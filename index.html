@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoteGuide AI - Understand Elections Easily</title>
+    <meta name="description" content="Learn voting, timelines, eligibility, and election steps in minutes. A smart civic assistant for citizens.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="light-mode">
+    
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">🗳️ VoteGuide AI</div>
+        <div class="nav-links">
+            <a href="#hero">Home</a>
+            <a href="#process">Process</a>
+            <a href="#timeline">Timeline</a>
+            <a href="#eligibility">Eligibility</a>
+            <a href="#faq">FAQ</a>
+        </div>
+        <div class="nav-actions">
+            <!-- Google Translate Placeholder -->
+            <div id="google_translate_element"></div>
+            <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+            <button class="hamburger" id="hamburger-menu" aria-label="Menu">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>Understand Elections <span class="highlight">Easily</span></h1>
+            <p>Learn voting, timelines, eligibility, and election steps in minutes. Your smart, friendly guide to participating in democracy.</p>
+            <div class="hero-buttons">
+                <a href="#eligibility" class="btn primary-btn">Get Started</a>
+                <a href="#process" class="btn secondary-btn">Explore Process</a>
+            </div>
+            <div class="progress-container">
+                <p>Civic Knowledge Progress: <span id="progress-text">0%</span></p>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-graphic">
+            <!-- Simple decorative element to keep size small -->
+            <div class="glass-orb orb-1"></div>
+            <div class="glass-orb orb-2"></div>
+            <div class="glass-card decorative-card">
+                <h3>Voter Checklist</h3>
+                <ul>
+                    <li>✅ Check Eligibility</li>
+                    <li>✅ Register to Vote</li>
+                    <li>✅ Find Polling Booth</li>
+                    <li>✅ Cast Your Vote</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Process Guide -->
+    <section id="process" class="process-section">
+        <div class="section-header">
+            <h2>The Election Process</h2>
+            <p>6 Simple steps to understand how democracy works.</p>
+        </div>
+        <div class="cards-grid">
+            <!-- Step 1 -->
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">📝</div>
+                <h3>1. Voter Registration</h3>
+                <div class="card-details">
+                    <p>Register online or offline via election commission. Check validity of voter ID.</p>
+                </div>
+            </div>
+            <!-- Step 2 -->
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">🤝</div>
+                <h3>2. Candidate Nomination</h3>
+                <div class="card-details">
+                    <p>Candidates file their nomination papers, declare assets, and undergo scrutiny.</p>
+                </div>
+            </div>
+            <!-- Step 3 -->
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">📢</div>
+                <h3>3. Campaign Period</h3>
+                <div class="card-details">
+                    <p>Parties hold rallies and share manifestos. A silent period applies 48 hrs before voting.</p>
+                </div>
+            </div>
+            <!-- Step 4 -->
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">🗳️</div>
+                <h3>4. Voting Day</h3>
+                <div class="card-details">
+                    <p>Go to the polling booth, show ID, press the button on the EVM (or ballot), and get the ink mark.</p>
+                </div>
+            </div>
+            <!-- Step 5 -->
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">🔢</div>
+                <h3>5. Counting</h3>
+                <div class="card-details">
+                    <p>EVMs are opened securely and votes are counted in the presence of election observers.</p>
+                </div>
+            </div>
+            <!-- Step 6 -->
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">🏆</div>
+                <h3>6. Results</h3>
+                <div class="card-details">
+                    <p>Candidates with majority votes are declared winners and form the government.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" class="timeline-section">
+        <div class="section-header">
+            <h2>Election Timeline Overview</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-panel">
+                    <h4>Day -90</h4>
+                    <p>Voter Registration Deadline</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-panel">
+                    <h4>Day -30</h4>
+                    <p>Candidate Nominations Close</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-panel">
+                    <h4>Day -2</h4>
+                    <p>Campaign Silence Period Starts</p>
+                </div>
+            </div>
+            <div class="timeline-item highlight-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-panel">
+                    <h4>Polling Day</h4>
+                    <p>Go Cast Your Vote!</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-panel">
+                    <h4>Day +2</h4>
+                    <p>Results Declaration</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eligibility Checker & Maps -->
+    <section id="eligibility" class="eligibility-map-section">
+        <div class="eligibility-container glass-panel">
+            <h2>Eligibility Checker</h2>
+            <form id="eligibility-form">
+                <div class="form-group">
+                    <label for="age">What is your age?</label>
+                    <input type="number" id="age" name="age" required min="1" max="120">
+                </div>
+                <div class="form-group">
+                    <label for="citizen">Are you a citizen of the country?</label>
+                    <select id="citizen" name="citizen" required>
+                        <option value="">Select option...</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="history">Have you voted before?</label>
+                    <select id="history" name="history">
+                        <option value="no">No, First Time</option>
+                        <option value="yes">Yes, Returning</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn primary-btn" style="width:100%">Check Eligibility</button>
+            </form>
+            <div id="eligibility-result" class="result-box hidden"></div>
+        </div>
+        
+        <div class="map-container glass-panel">
+            <h2>Find Polling Location</h2>
+            <p>Example using Google Maps Embed API</p>
+            <!-- Use Election Commission Kolkata for localized demo -->
+            <iframe 
+                src="https://maps.google.com/maps?q=Election+Commission+Kolkata&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+                width="100%" 
+                height="300" 
+                style="border:0; border-radius: 8px;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="quiz-section">
+        <div class="section-header">
+            <h2>Civic Knowledge Quiz</h2>
+        </div>
+        <div class="glass-panel quiz-container" style="max-width: 600px; margin: 0 auto; padding: 2rem; border-radius: 12px; text-align: center;">
+            <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">If you are 17 years old, can you vote in the actual election?</p>
+            <div class="quiz-options" style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                <button class="btn secondary-btn quiz-btn" data-correct="false">Yes</button>
+                <button class="btn secondary-btn quiz-btn" data-correct="true">No</button>
+            </div>
+            <div id="quiz-result" class="result-box hidden"></div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item glass-panel">
+                <button class="faq-question" aria-expanded="false">How do I register to vote?</button>
+                <div class="faq-answer">
+                    <p>You can register online via your national election portal or physically by submitting the required forms at a local electoral office.</p>
+                </div>
+            </div>
+            <div class="faq-item glass-panel">
+                <button class="faq-question" aria-expanded="false">What ID is needed?</button>
+                <div class="faq-answer">
+                    <p>You typically need a Voter ID card, Passport, Driving License, or other government-approved photo ID.</p>
+                </div>
+            </div>
+            <div class="faq-item glass-panel">
+                <button class="faq-question" aria-expanded="false">Can I vote from another city?</button>
+                <div class="faq-answer">
+                    <p>Usually, you can only vote in the constituency you are registered in. However, postal ballots or special transfers might be available for specific categories.</p>
+                </div>
+            </div>
+            <div class="faq-item glass-panel">
+                <button class="faq-question" aria-expanded="false">Is voting compulsory?</button>
+                <div class="faq-answer">
+                    <p>In most democracies, voting is a civic right, not a legal compulsion. However, participating strengthens democracy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; <span id="year"></span> VoteGuide AI. Built for the civic tech hackathon.</p>
+        <p class="small-text">Note: This is a demonstration project.</p>
+    </footer>
+
+    <!-- Smart Floating Chatbot -->
+    <div class="chatbot-container">
+        <button id="chat-toggle" aria-label="Open Chat Assistant">
+            <span class="chat-icon">💬</span> Ask AI
+        </button>
+        <div id="chat-window" class="chat-window hidden glass-panel">
+            <div class="chat-header">
+                <h3>Civic Assistant</h3>
+                <button id="chat-close" aria-label="Close Chat">✖</button>
+            </div>
+            <div class="chat-body" id="chat-body">
+                <div class="message assistant">
+                    Hi! I'm VoteGuide AI. How can I help you understand the election process today?
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <button id="voice-btn" aria-label="Voice Input">🎤</button>
+                <input type="text" id="chat-input" placeholder="Type a question...">
+                <button id="chat-send" aria-label="Send Message">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Google Translate API -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,hi,bn', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="script.js"></script>
+</body>
+</html>
