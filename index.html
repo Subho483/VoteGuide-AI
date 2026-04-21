@@ -171,6 +171,36 @@
         </div>
     </section>
 
+    <!-- AI Debate Simulator -->
+    <section id="debate" class="debate-section" style="background: var(--bg-alt); padding: 4rem 5%;">
+        <div class="section-header">
+            <h2>🧠 AI Debate Simulator</h2>
+            <p>Explore both sides of complex civic issues instantly.</p>
+        </div>
+        <div class="glass-panel" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2rem;">
+                <button class="btn primary-btn debate-btn" data-topic="online">Online Voting</button>
+                <button class="btn secondary-btn debate-btn" data-topic="compulsory">Compulsory Voting</button>
+                <button class="btn secondary-btn debate-btn" data-topic="youth">Youth Participation</button>
+                <button class="btn secondary-btn debate-btn" data-topic="nota">NOTA Option</button>
+            </div>
+            <div class="debate-results" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                <div class="glass-panel" style="padding: 1.5rem; border-top: 4px solid #10b981;">
+                    <h4 style="color: #10b981;">👍 Pro Argument</h4>
+                    <p id="debate-pro" style="font-size: 0.95rem; margin-top: 0.5rem; color: var(--text-main);">Increases accessibility, convenience, and potentially massive turnout for younger generations.</p>
+                </div>
+                <div class="glass-panel" style="padding: 1.5rem; border-top: 4px solid #6366f1;">
+                    <h4 style="color: #6366f1;">⚖️ Neutral Summary</h4>
+                    <p id="debate-neutral" style="font-size: 0.95rem; margin-top: 0.5rem; color: var(--text-main);">A digital transition requires balancing extreme convenience against absolute security necessities.</p>
+                </div>
+                <div class="glass-panel" style="padding: 1.5rem; border-top: 4px solid #ef4444;">
+                    <h4 style="color: #ef4444;">👎 Con Argument</h4>
+                    <p id="debate-con" style="font-size: 0.95rem; margin-top: 0.5rem; color: var(--text-main);">High risk of cyber manipulation, deep state hacking, and loss of secret ballot integrity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Eligibility Checker & Maps -->
     <section id="eligibility" class="eligibility-map-section">
         <div class="eligibility-container glass-panel">
@@ -286,6 +316,28 @@
                 <div class="card-icon">📸</div>
                 <h3>Beware Fake Media</h3>
                 <p style="margin-top:0.5rem">Photos and audio can be artificially generated (Deepfakes). Pay attention to irregularities and seek original video contexts.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Election Emergency Assistant -->
+    <section id="emergency" class="emergency-section" style="padding-bottom: 2rem;">
+        <div class="section-header">
+            <h2>🆘 Election Emergency Assistant</h2>
+            <p>Facing a sudden issue? Don't panic. Select your problem for instant guidance.</p>
+        </div>
+        <div class="glass-panel" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.5rem;">
+                <button class="btn secondary-btn emergency-btn" data-type="lost-id">Lost Voter ID</button>
+                <button class="btn secondary-btn emergency-btn" data-type="missing-name">Name Missing</button>
+                <button class="btn secondary-btn emergency-btn" data-type="no-booth">Can't Find Booth</button>
+                <button class="btn secondary-btn emergency-btn" data-type="queue">Long Queue</button>
+                <button class="btn secondary-btn emergency-btn" data-type="panic">First-Time Panic</button>
+                <button class="btn secondary-btn emergency-btn" data-type="a11y">Need Ramp/Help</button>
+            </div>
+            <div id="emergency-result" class="glass-panel hidden" style="padding: 1.5rem; background: var(--glass-bg); border-left: 4px solid #ef4444;">
+                <h3 id="emergency-title" style="color: #ef4444; font-size: 1.25rem;">[TITLE]</h3>
+                <p id="emergency-desc" style="margin-top: 0.5rem; font-weight: 500; font-size: 0.95rem; color: var(--text-main);">[SOLUTION]</p>
             </div>
         </div>
     </section>

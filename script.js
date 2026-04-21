@@ -361,5 +361,82 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Voice input is not supported in this browser.');
         }
     });
+    // =============== AI Debate Simulator ===============
+    const debateData = {
+        'online': {
+            pro: 'Increases accessibility, convenience, and potentially massive turnout for younger voters.',
+            neutral: 'A digital transition requires balancing extreme convenience against absolute security necessities.',
+            con: 'High risk of cyber manipulation, deep state hacking, and loss of secret ballot integrity.'
+        },
+        'compulsory': {
+            pro: 'Ensures the elected government truly reflects the will of the entire population.',
+            neutral: 'Raises the question of whether voting is a strict civic duty or a democratic choice.',
+            con: 'Forces disengaged or grossly uninformed citizens to vote, potentially leading to random elections.'
+        },
+        'youth': {
+            pro: 'Engages the next generation in policies that will directly affect their entire future trajectory.',
+            neutral: 'Youth are passionate but may lack historical perspective; integrating them requires intensive civic education.',
+            con: 'Younger demographics can be too easily swayed by viral social media trends or influencers.'
+        },
+        'nota': {
+            pro: 'Provides a powerful democratic megaphone to express systemic dissatisfaction without boycotting.',
+            neutral: 'Primarily a symbolic gesture in many systems, unless NOTA majorities trigger mandatory re-elections.',
+            con: 'Can dilute valid votes, potentially allowing less popular candidates to win through fractured polling.'
+        }
+    };
+
+    const debateBtns = document.querySelectorAll('.debate-btn');
+    const proText = document.getElementById('debate-pro');
+    const neutralText = document.getElementById('debate-neutral');
+    const conText = document.getElementById('debate-con');
+
+    if(debateBtns.length > 0) {
+        debateBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                debateBtns.forEach(b => {
+                    b.classList.remove('primary-btn');
+                    b.classList.add('secondary-btn');
+                });
+                btn.classList.add('primary-btn');
+                btn.classList.remove('secondary-btn');
+
+                const topic = btn.getAttribute('data-topic');
+                if(debateData[topic]) {
+                    proText.textContent = debateData[topic].pro;
+                    neutralText.textContent = debateData[topic].neutral;
+                    conText.textContent = debateData[topic].con;
+                }
+            });
+        });
+    }
+
+    // =============== Election Emergency Assistant ===============
+    const emergencyData = {
+        'lost-id': { title: 'Lost Voter ID (EPIC)?', solution: 'Don\'t panic! You can still vote. Bring any state-approved alternative ID: Aadhar Card, Driver\'s License, Passport, or PAN Card.' },
+        'missing-name': { title: 'Name Missing from List?', solution: 'Check with the Booth Level Officer (BLO). If you have an EPIC but your name is missing due to a clerical delete, standardly you cannot vote today. File a dispute form for the next cycle.' },
+        'no-booth': { title: 'Can\'t Find Your Booth?', solution: 'Use our Smart Pincode tool above, or SMS "EPIC <Your Voter ID Number>" to the Election Commission hotline (1950) to instantly get your booth address.' },
+        'queue': { title: 'Long Queues?', solution: 'If you join the queue before the official closing time (usually 6 PM), the officers are legally required to let you vote, regardless of how late it gets. Stay in line!' },
+        'panic': { title: 'First-Time Panic?', solution: 'Take a deep breath! Approach the first officer, show your ID, and they will direct you step-by-step. Nobody is judging you.' },
+        'a11y': { title: 'Require Accessibility Support?', solution: 'By law, all polling booths must have wheelchair ramps. Look for the Presiding Officer to request priority access or companion assistance.' }
+    };
+
+    const emergencyBtns = document.querySelectorAll('.emergency-btn');
+    const emergencyResult = document.getElementById('emergency-result');
+    const emergencyTitle = document.getElementById('emergency-title');
+    const emergencyDesc = document.getElementById('emergency-desc');
+
+    if (emergencyBtns.length > 0 && emergencyResult) {
+        emergencyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const type = btn.getAttribute('data-type');
+                if(emergencyData[type]) {
+                    emergencyTitle.textContent = emergencyData[type].title;
+                    emergencyDesc.textContent = emergencyData[type].solution;
+                    emergencyResult.classList.remove('hidden');
+                    emergencyResult.style.display = 'block';
+                }
+            });
+        });
+    }
 
 });

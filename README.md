@@ -91,6 +91,12 @@ A simulated roadmap preview demonstrating how users will soon be able to input t
 - Progress tracker
 - Voice readout support
 
+## 🆘 Election Emergency Assistant
+A fast-action panic button system offering immediate, legally-accurate advice for stressful polling day issues (Lost IDs, Missing Names, Queues).
+
+## 🧠 AI Debate Simulator
+A unique civic tool that rapidly presents the **Pro, Con, and Neutral** perspectives on major democratic proposals (Online Voting, Compulsory Voting) to foster deeper voter awareness.
+
 ---
 
 # ☁️ Google Services Used
