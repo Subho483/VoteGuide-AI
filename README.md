@@ -182,6 +182,7 @@ gcloud run deploy voteguide-ai \
 
 * **Secured API Hub**: The Gemini AI API key is safely secured within a local Node.js Express Backend Proxy.
 * **No Frontend Secrets**: The frontend JavaScript (`scripts.js`) never exposes any API keys or secrets to the browser.
+* **Responsible AI Guidance System**: Pre-configured with rigid system prompt boundaries ensuring strict algorithmic neutrality, anti-partisan behavior, and robust explanations of core civic protocols.
 * **Cloud Run Environment Integrated**: Utilizes `gcloud` `--set-env-vars` commands to safely inject the `GEMINI_API_KEY` straight into the cloud container.
 * Fallback deterministic chatbot logic remains completely operational even if no API keys are loaded.
 
