@@ -3,9 +3,6 @@
  * Handling UI interactions, theming, Eligibility logic, and smart chatbot logic.
  */
 
-// NOTE: For live Gemini usage, insert key here. Else it will use local intelligence.
-const GEMINI_API_KEY = "AIzaSyB74joiTnvJQgO9wqzi7UrCm6WhPHMxA1E"; 
-
 document.addEventListener('DOMContentLoaded', () => {
     
     // Set Year
@@ -266,12 +263,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let lastContext = ""; // For smarter chatbot memory
 
-    // Dual Mode: Uses Gemini if key present, else local intent matching.
+    // Dual Mode: Uses Backend API proxy if present, else local intent matching.
     async function getBotResponse(prompt) {
         const p = prompt.toLowerCase();
         
-        // Local Smart Logic Matcher (Fallback & Lightweight)
-        if (!GEMINI_API_KEY) {
+        // Helper function for local smart logic fallback
+        function getLocalFallback() {
             let response = "";
             if (p.includes('18') && (p.includes('vote') || p.includes('how'))) {
                  response = "Welcome to adulthood! Since you're 18, check the Eligibility tool. You need to Register first (Step 1). Keep an ID handy!";
@@ -296,32 +293,35 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (p.includes('hello') || p.includes('hi')) {
                  response = "Hello! I am your civic assistant. Ask me about registration, voting days, or eligibility.";
             } else {
-                 response = "I'm not exactly sure, but you can check our Process map or FAQ section. (Add a Gemini API key for smarter AI responses!)";
+                 response = "I'm not exactly sure, but you can check our Process map or FAQ section.";
                  lastContext = "";
             }
             return response;
         }
 
-        // Optional Gemini Integration Mode
         try {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-            const response = await fetch(url, {
+            const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{ text: `You are a civic election assistant named VoteGuide AI. Keep answers short, polite, and helpful (under 3 sentences). User asks: ${prompt}` }]
-                    }]
-                })
+                body: JSON.stringify({ message: prompt })
             });
+
+            // If API key is missing on backend, parsing fails, or quota exhausted, standard response catches
+            if (!response.ok) {
+                console.warn("Backend API unavailable or missing API Key. Falling back to local intelligence.");
+                return getLocalFallback();
+            }
+
             const data = await response.json();
-            if (data.candidates && data.candidates[0]) {
-                return data.candidates[0].content.parts[0].text;
+            if (data && data.reply) {
+                return data.reply;
             }
         } catch (error) {
-            console.error("Gemini Error:", error);
-            return "Sorry, I am facing network issues connecting to my AI brain. Please check the FAQs.";
+            console.error("Proxy Error:", error);
         }
+        
+        // Ultimate network fallback
+        return getLocalFallback();
     }
 
     // =============== Accessibility: Voice Readout ===============
