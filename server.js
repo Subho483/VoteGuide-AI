@@ -11,34 +11,31 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Secure API Proxy for Gemini
 app.post('/api/chat', async (req, res) => {
   try {
     const userMessage = req.body.message;
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!userMessage) {
-      return res.status(400).json({ error: "Message is required." });
+      return res.status(400).json({ error: 'Message required' });
     }
 
     if (!apiKey) {
-      return res.status(503).json({ error: "No API key configured." });
+      return res.status(503).json({ error: 'Missing API key' });
     }
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
     const prompt = `
-You are VoteGuide AI, a neutral civic assistant.
-Explain voting rules, NOTA, eligibility, election officers, and election processes simply.
-If rules vary by region, say so.
+You are VoteGuide AI, a helpful and neutral civic assistant.
+Explain elections, voter eligibility, NOTA, officers, voting process, and rules simply.
+If rules vary by state/country, mention that.
 User asks: ${userMessage}
 `;
 
     const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents: [
           {
@@ -51,19 +48,19 @@ User asks: ${userMessage}
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("Gemini API Error:", data);
-      return res.status(500).json({ error: "Gemini request failed." });
+      console.error(data);
+      return res.status(500).json({ error: 'Gemini request failed' });
     }
 
     const reply =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "Sorry, I could not generate a response.";
+      'Sorry, I could not generate a reply.';
 
     res.json({ reply });
 
   } catch (error) {
-    console.error("Server Error:", error);
-    res.status(500).json({ error: "Internal server error." });
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
