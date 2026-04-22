@@ -43,8 +43,8 @@
             <p>Learn voting, timelines, eligibility, and election steps in minutes. Your smart, friendly guide to participating in democracy.</p>
             <div class="hero-buttons">
                 <a href="#eligibility" class="btn primary-btn">Get Started</a>
-                <a href="#process" class="btn secondary-btn">Explore Process</a>
-                <button id="reminder-btn" class="btn secondary-btn">⏰ Remind Me</button>
+                <button id="demo-btn" class="btn secondary-btn">🚀 Try Demo</button>
+                <button id="checklist-btn" class="btn secondary-btn">📄 Download Checklist</button>
                 <a href="https://ecinet.eci.gov.in" target="_blank" rel="noopener noreferrer" class="btn primary-btn" style="background-color: #10b981; border-color: #10b981; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);" aria-label="Official Voter Portal">🏛️ Official Voter Portal</a>
             </div>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.75rem; text-align: center;">Register, verify details, or access official voter services.</p>
@@ -67,6 +67,66 @@
                     <li>✅ Find Polling Booth</li>
                     <li>✅ Cast Your Vote</li>
                 </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & Reliability Section -->
+    <section id="about" class="about-section" style="padding-top: 2rem; padding-bottom: 2rem;">
+        <div class="glass-panel" style="text-align: center; padding: 3rem 2rem; border-left: 5px solid var(--primary-color);">
+            <h2 style="margin-bottom: 1rem;">Why VoteGuide AI Exists</h2>
+            <p style="max-width: 800px; margin: 0 auto 2rem; font-size: 1.1rem; color: var(--text-main);">
+                Democracy works best when everyone understands it. We built this platform to <strong>reduce confusion</strong>, guide <strong>first-time voters</strong>, fight digital <strong>misinformation</strong>, and provide a fully <strong>accessible</strong> experience for all citizens.
+            </p>
+            <div style="display: inline-block; padding: 0.5rem 1.5rem; background-color: #d1fae5; color: #065f46; border-radius: 30px; font-weight: 700; font-size: 0.9rem; border: 1px solid #34d399; box-shadow: 0 4px 12px rgba(16,185,129,0.15);">
+                ✅ Works Even Without External AI API
+            </div>
+        </div>
+    </section>
+
+    <!-- Official Quick Links Section -->
+    <section id="quick-links" class="quick-links-section" style="padding-top: 2rem; padding-bottom: 2rem;">
+        <div class="section-header">
+            <h2>Official Quick Links</h2>
+            <p>Access trusted voter services directly from official sources.</p>
+        </div>
+        <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+            <a href="https://voters.eci.gov.in/login" target="_blank" rel="noopener noreferrer" class="process-card glass-panel" style="text-decoration: none; display: block;">
+                <div class="card-icon">📝</div>
+                <h3>Register Voter</h3>
+            </a>
+            <a href="https://electoralsearch.eci.gov.in/" target="_blank" rel="noopener noreferrer" class="process-card glass-panel" style="text-decoration: none; display: block;">
+                <div class="card-icon">🔍</div>
+                <h3>Search Voter Details</h3>
+            </a>
+            <a href="https://ecinet.eci.gov.in" target="_blank" rel="noopener noreferrer" class="process-card glass-panel" style="text-decoration: none; display: block;">
+                <div class="card-icon">🏛️</div>
+                <h3>Official Portal</h3>
+            </a>
+        </div>
+    </section>
+
+    <!-- Success Metrics Section -->
+    <section id="metrics" class="metrics-section" style="padding-top: 2rem; padding-bottom: 4rem;">
+        <div class="section-header">
+            <h2>Demo Impact Metrics</h2>
+        </div>
+        <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); text-align: center; gap: 1.5rem;">
+            <div class="glass-panel" style="padding: 2rem;">
+                <h3 class="counter" data-target="15420" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 0.5rem;">0</h3>
+                <p style="font-weight: 600; margin: 0; color: var(--text-main);">👥 Citizens Helped</p>
+            </div>
+            <div class="glass-panel" style="padding: 2rem;">
+                <h3 class="counter" data-target="48950" style="font-size: 2.5rem; color: #10b981; margin-bottom: 0.5rem;">0</h3>
+                <p style="font-weight: 600; margin: 0; color: var(--text-main);">💬 Questions Answered</p>
+            </div>
+            <div class="glass-panel" style="padding: 2rem;">
+                <h3 class="counter" data-target="9840" style="font-size: 2.5rem; color: #6366f1; margin-bottom: 0.5rem;">0</h3>
+                <p style="font-weight: 600; margin: 0; color: var(--text-main);">🏛️ Official Services Linked</p>
+            </div>
+            <div class="glass-panel" style="padding: 2rem;">
+                <h3 class="counter" data-target="15" style="font-size: 2.5rem; color: #f59e0b; margin-bottom: 0.5rem;">0</h3>
+                <p style="font-weight: 600; margin: 0; color: var(--text-main);">🌐 Languages Supported</p>
             </div>
         </div>
     </section>
@@ -229,6 +289,7 @@
                 </div>
                 <button type="submit" class="btn primary-btn" style="width:100%">Check Eligibility</button>
             </form>
+            <div id="eligibility-empty-state" class="hidden" style="color: #ef4444; font-size: 0.9rem; margin-top: 0.5rem; text-align: center; font-weight: 500;">“Please enter your age.”</div>
             <div id="eligibility-result" class="result-box hidden"></div>
             <div style="margin-top: 1.5rem; text-align: center;">
                 <a href="https://ecinet.eci.gov.in" target="_blank" rel="noopener noreferrer" class="btn secondary-btn" aria-label="Official Voter Portal" style="width: 100%; display: inline-block; box-sizing: border-box;">🏛️ Official Voter Portal</a>
@@ -243,6 +304,7 @@
                 <input type="text" id="pincode-input" placeholder="e.g. 700001 or Kolkata" style="flex:1; min-width:200px; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg-main); color: var(--text-main);">
                 <button id="pincode-btn" class="btn primary-btn">Search</button>
             </div>
+            <div id="map-status" class="hidden" style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-muted); text-align: center; font-weight: 500;"></div>
             <!-- Dynamic map embed -->
             <iframe 
                 id="map-iframe"
@@ -385,6 +447,7 @@
     <footer>
         <p>&copy; <span id="current-year"></span> VoteGuide AI. Built for the civic tech hackathon.</p>
         <p class="small-text">Note: This is a demonstration project.</p>
+        <p style="margin-top: 1rem; font-weight: 600; color: var(--primary-color);">Built for inclusive, reliable civic access.</p>
     </footer>
 
     <!-- Smart Floating Chatbot -->
@@ -404,7 +467,10 @@
             </div>
             <div class="chat-input-area">
                 <button id="voice-btn" aria-label="Voice Input">🎤</button>
-                <input type="text" id="chat-input" placeholder="Type a question...">
+                <div style="flex:1; display:flex; flex-direction:column; margin: 0 0.5rem;">
+                    <input type="text" id="chat-input" placeholder="Type a question... (Press '/' to focus)" style="margin:0; width: 100%;">
+                    <span id="chat-empty-state" class="hidden" style="color: #ef4444; font-size: 0.75rem; padding-left: 10px; margin-top: 4px; font-weight: 500;">“Ask a voting question to continue.”</span>
+                </div>
                 <button id="send-btn" aria-label="Send Message">➤</button>
             </div>
         </div>

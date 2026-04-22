@@ -126,7 +126,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function handleChatSubmit() {
         const text = chatInput.value.trim();
-        if (!text) return;
+        const emptyState = document.getElementById('chat-empty-state');
+        if (!text) {
+            if (emptyState) emptyState.classList.remove('hidden');
+            return;
+        }
+        if (emptyState) emptyState.classList.add('hidden');
 
         appendMessage(text, 'user');
         chatInput.value = '';
@@ -177,7 +182,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (eligibilityForm && resultBox) {
         eligibilityForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const age = parseInt(document.getElementById('age').value);
+            const ageInput = document.getElementById('age').value;
+            const emptyState = document.getElementById('eligibility-empty-state');
+            if (!ageInput) {
+                if (emptyState) emptyState.classList.remove('hidden');
+                resultBox.classList.add('hidden');
+                return;
+            }
+            if (emptyState) emptyState.classList.add('hidden');
+            const age = parseInt(ageInput);
             const citizen = document.getElementById('citizen').value;
             const history = document.getElementById('history').value;
 
@@ -296,9 +309,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (pincodeBtn && pincodeInput && mapIframe) {
         const executeSearch = () => {
             const val = pincodeInput.value.trim();
-            if (val) {
-                mapIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(val)}+Polling+Booth&t=&z=14&ie=UTF8&output=embed`;
+            const status = document.getElementById('map-status');
+            if (!val) {
+                if (status) {
+                    status.textContent = "“Enter pincode or location.”";
+                    status.classList.remove('hidden');
+                }
+                return;
             }
+            if (status) {
+                status.textContent = "Loading map...";
+                status.classList.remove('hidden');
+            }
+            setTimeout(() => {
+                mapIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(val)}+Polling+Booth&t=&z=14&ie=UTF8&output=embed`;
+                if (status) status.classList.add('hidden');
+            }, 800);
         };
         pincodeBtn.addEventListener('click', executeSearch);
         pincodeInput.addEventListener('keypress', (e) => {
@@ -391,5 +417,101 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set Copyright Year
     const yearSpan = document.getElementById('current-year');
     if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+    // ==========================================
+    // 11. DEMO MODE & CHECKLIST
+    // ==========================================
+    const demoBtn = document.getElementById('demo-btn');
+    if (demoBtn) {
+        demoBtn.addEventListener('click', () => {
+            demoBtn.textContent = '🚀 Running Demo...';
+            demoBtn.disabled = true;
+            
+            document.getElementById('eligibility').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                document.getElementById('age').value = '21';
+                document.getElementById('citizen').value = 'yes';
+                document.getElementById('history').value = 'no';
+                if (eligibilityForm) eligibilityForm.dispatchEvent(new Event('submit', { cancelable: true }));
+            }, 1500);
+
+            setTimeout(() => {
+                if (chatToggle) chatToggle.click();
+                if (chatInput) chatInput.value = 'What is NOTA?';
+            }, 3500);
+            setTimeout(() => { if (sendBtn) sendBtn.click(); }, 5000);
+
+            setTimeout(() => {
+                if (closeChat) closeChat.click();
+                document.getElementById('pincode-input').value = '700001';
+                if (pincodeBtn) pincodeBtn.click();
+            }, 9000);
+
+            setTimeout(() => {
+                document.getElementById('quick-links').scrollIntoView({ behavior: 'smooth' });
+                demoBtn.textContent = '🚀 Try Demo';
+                demoBtn.disabled = false;
+            }, 12000);
+        });
+    }
+
+    const checklistBtn = document.getElementById('checklist-btn');
+    if (checklistBtn) {
+        checklistBtn.addEventListener('click', () => {
+            checklistBtn.textContent = 'Preparing...';
+            setTimeout(() => {
+                const text = "🗳️ VOTEGUIDE AI - OFFICIAL VOTER CHECKLIST 🗳️\n\n1. ✅ Carry Valid ID (Voter ID, Passport, or DL)\n2. ✅ Verify Booth Location in Advance\n3. ✅ Reach Early to Avoid Long Queues\n4. ✅ Follow Polling Booth Queue Rules\n5. ✅ Cast Your Secret Vote\n6. ✅ Help Others Responsibly\n\nDemocracy works when you participate!";
+                const blob = new Blob([text], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'Voter_Checklist.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                checklistBtn.textContent = '📄 Download Checklist';
+            }, 800);
+        });
+    }
+
+    // ==========================================
+    // 12. METRICS ANIMATION & KEYBOARD SHORTCUTS
+    // ==========================================
+    const counters = document.querySelectorAll('.counter');
+    if (counters.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = +counter.getAttribute('data-target');
+                    let current = 0;
+                    const increment = target / 40;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            counter.textContent = target.toLocaleString() + "+";
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = Math.ceil(current).toLocaleString();
+                        }
+                    }, 30);
+                    observer.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(counter => observer.observe(counter));
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && chatWidget && !chatWidget.classList.contains('hidden')) {
+            closeChat.click();
+        }
+        if (e.key === '/' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+            if (chatWidget && chatWidget.classList.contains('hidden')) chatToggle.click();
+            else if (chatInput) chatInput.focus();
+        }
+    });
 
 });

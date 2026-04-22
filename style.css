@@ -196,6 +196,7 @@ body.a11y-mode .btn {
     display: flex;
     gap: 1rem;
     margin-top: 2rem;
+    flex-wrap: wrap;
 }
 .hero-graphic {
     flex: 1;
