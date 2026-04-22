@@ -377,7 +377,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; <span id="year"></span> VoteGuide AI. Built for the civic tech hackathon.</p>
+        <p>&copy; <span id="current-year"></span> VoteGuide AI. Built for the civic tech hackathon.</p>
         <p class="small-text">Note: This is a demonstration project.</p>
     </footer>
 
@@ -386,10 +386,10 @@
         <button id="chat-toggle" aria-label="Open Chat Assistant">
             <span class="chat-icon">💬</span> Ask AI
         </button>
-        <div id="chat-window" class="chat-window hidden glass-panel">
+        <div id="chat-widget" class="chat-window hidden glass-panel">
             <div class="chat-header">
                 <h3>Civic Assistant</h3>
-                <button id="chat-close" aria-label="Close Chat">✖</button>
+                <button id="close-chat" aria-label="Close Chat">✖</button>
             </div>
             <div class="chat-body" id="chat-body">
                 <div class="message assistant">
@@ -399,7 +399,7 @@
             <div class="chat-input-area">
                 <button id="voice-btn" aria-label="Voice Input">🎤</button>
                 <input type="text" id="chat-input" placeholder="Type a question...">
-                <button id="chat-send" aria-label="Send Message">➤</button>
+                <button id="send-btn" aria-label="Send Message">➤</button>
             </div>
         </div>
     </div>
