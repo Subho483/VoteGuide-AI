@@ -298,6 +298,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return response;
         }
+// Backend AI Mode
+try {
+    const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            message: prompt
+        })
+    });
 
         // Backend AI Mode
         try {
@@ -320,9 +331,14 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Backend Chat Error:", error);
             return "Sorry, I am facing network issues connecting to my AI brain. Please check the FAQs.";
-        }
-    }
+        }    }
 
+    return "Sorry, I couldn't process that right now.";
+
+} catch (error) {
+    console.error("Backend Chat Error:", error);
+    return "Sorry, I am facing network issues connecting to my AI brain. Please check the FAQs.";
+}
     // =============== Accessibility: Voice Readout ===============
     function speakText(text) {
         if ('speechSynthesis' in window) {
