@@ -302,20 +302,21 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch('/api/chat', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: prompt })
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: prompt
+                })
             });
 
-            // If API key is missing on backend, parsing fails, or quota exhausted, standard response catches
+            const data = await response.json();
+
             if (!response.ok) {
-                console.warn("Backend API unavailable or missing API Key. Falling back to local intelligence.");
-                return getLocalFallback();
+                throw new Error(data.error || 'Request failed');
             }
 
-            const data = await response.json();
-            if (data && data.reply) {
-                return data.reply;
-            }
+            return data.reply;
         } catch (error) {
             console.error("Proxy Error:", error);
         }
