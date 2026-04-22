@@ -299,12 +299,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return response;
         }
 
+        // Backend AI Mode
         try {
             const response = await fetch('/api/chat', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     message: prompt
                 })
@@ -312,17 +311,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
 
-            if (!response.ok) {
-                throw new Error(data.error || 'Request failed');
+            if (response.ok && data.reply) {
+                return data.reply;
+            } else {
+                return "Sorry, I couldn't process that right now.";
             }
 
-            return data.reply;
         } catch (error) {
-            console.error("Proxy Error:", error);
+            console.error("Backend Chat Error:", error);
+            return "Sorry, I am facing network issues connecting to my AI brain. Please check the FAQs.";
         }
-        
-        // Ultimate network fallback
-        return getLocalFallback();
     }
 
     // =============== Accessibility: Voice Readout ===============
