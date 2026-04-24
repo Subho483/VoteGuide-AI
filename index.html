@@ -290,7 +290,7 @@
                 <button type="submit" class="btn primary-btn" style="width:100%">Check Eligibility</button>
             </form>
             <div id="eligibility-empty-state" class="hidden" style="color: #ef4444; font-size: 0.9rem; margin-top: 0.5rem; text-align: center; font-weight: 500;">“Please enter your age.”</div>
-            <div id="eligibility-result" class="result-box hidden"></div>
+            <div id="eligibility-result" class="result-box hidden" aria-live="polite"></div>
             <div style="margin-top: 1.5rem; text-align: center;">
                 <a href="https://ecinet.eci.gov.in" target="_blank" rel="noopener noreferrer" class="btn secondary-btn" aria-label="Official Voter Portal" style="width: 100%; display: inline-block; box-sizing: border-box;">🏛️ Official Voter Portal</a>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Register, verify details, or access official voter services.</p>
@@ -304,7 +304,7 @@
                 <input type="text" id="pincode-input" placeholder="e.g. 700001 or Kolkata" style="flex:1; min-width:200px; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg-main); color: var(--text-main);">
                 <button id="pincode-btn" class="btn primary-btn">Search</button>
             </div>
-            <div id="map-status" class="hidden" style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-muted); text-align: center; font-weight: 500;"></div>
+            <div id="map-status" class="hidden" aria-live="polite" style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-muted); text-align: center; font-weight: 500;"></div>
             <!-- Dynamic map embed -->
             <iframe 
                 id="map-iframe"
@@ -460,10 +460,15 @@
                 <h3>Civic Assistant</h3>
                 <button id="close-chat" aria-label="Close Chat">✖</button>
             </div>
-            <div class="chat-body" id="chat-body">
+            <div class="chat-body" id="chat-body" aria-live="polite">
                 <div class="message assistant">
                     Hi! I'm VoteGuide AI. How can I help you understand the election process today?
                 </div>
+            </div>
+            <div class="chat-chips" style="display: flex; gap: 0.5rem; padding: 0.5rem 1rem; overflow-x: auto; background: var(--bg-alt); border-top: 1px solid var(--glass-border);">
+                <button class="chat-chip">What is NOTA?</button>
+                <button class="chat-chip">First time voter</button>
+                <button class="chat-chip">How to register?</button>
             </div>
             <div class="chat-input-area">
                 <button id="voice-btn" aria-label="Voice Input">🎤</button>

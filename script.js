@@ -11,8 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const state = {
         lastContext: "",
         a11yMode: localStorage.getItem('a11y') === 'true',
-        progress: new Set()
+        progress: new Set(),
+        confettiFired: false
     };
+
+    function triggerConfetti() {
+        const colors = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#6366f1'];
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            confetti.style.animationDelay = Math.random() * 1 + 's';
+            document.body.appendChild(confetti);
+            setTimeout(() => { confetti.remove(); }, 6000);
+        }
+    }
 
     function updateProgress(actionId) {
         state.progress.add(actionId);
@@ -22,6 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const percentage = Math.min((state.progress.size / 6) * 100, 100);
             progressFill.style.width = `${percentage}%`;
             progressText.textContent = `${Math.round(percentage)}%`;
+            if (percentage === 100 && !state.confettiFired) {
+                state.confettiFired = true;
+                triggerConfetti();
+            }
         }
     }
 
@@ -79,6 +98,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         closeChat.addEventListener('click', () => chatWidget.classList.add('hidden'));
     }
+
+    // Quick Chips Logic
+    const chatChips = document.querySelectorAll('.chat-chip');
+    chatChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            if (chatInput) {
+                chatInput.value = chip.textContent;
+                handleChatSubmit();
+            }
+        });
+    });
 
     // Append Message UI
     function appendMessage(text, sender, id = null) {
@@ -206,9 +236,11 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (history === 'no') {
                 resultBox.classList.add('success-msg');
                 resultBox.innerHTML = `<strong>Eligible!</strong> Since you are a first-time voter, you need to Register first. Head to the Official Portal.`;
+                triggerConfetti();
             } else {
                 resultBox.classList.add('success-msg');
                 resultBox.innerHTML = `<strong>Eligible!</strong> You are good to go. Make sure to check your name on the voter list before polling day.`;
+                triggerConfetti();
             }
         });
     }

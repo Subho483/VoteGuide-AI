@@ -512,6 +512,47 @@ body.a11y-mode .btn {
     color: var(--primary-color);
 }
 
+/* Chat Quick Chips */
+.chat-chip {
+    white-space: nowrap;
+    padding: 0.4rem 0.8rem;
+    background: var(--bg-main);
+    border: 1px solid var(--primary-color);
+    border-radius: 20px;
+    color: var(--primary-color);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.chat-chip:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Accessibility Focus Outline */
+*:focus-visible {
+    outline: 2px solid var(--primary-color) !important;
+    outline-offset: 3px !important;
+    border-radius: 4px;
+}
+
+/* Confetti WOW Factor */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: #f00;
+    opacity: 0;
+    animation: fall linear forwards;
+    z-index: 9999;
+    pointer-events: none;
+}
+@keyframes fall {
+    0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
 /* Footer */
 footer {
     text-align: center;
