@@ -546,4 +546,122 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // ==========================================
+    // 13. ELECTION SIMULATION LAB
+    // ==========================================
+    const simState = {
+        voteEnabled: false,
+        voted: false,
+        tally: { 'Candidate A': 0, 'Candidate B': 0, 'Candidate C': 0, 'NOTA': 0 },
+        vvpatTimer: null
+    };
+
+    const enableVoteBtn  = document.getElementById('enable-vote-btn');
+    const controlStatus  = document.getElementById('control-status');
+    const candidateBtns  = document.querySelectorAll('.sim-candidate-btn');
+    const vvpatSlip      = document.getElementById('vvpat-slip');
+    const vvpatText      = document.getElementById('vvpat-candidate-text');
+    const vvpatTimerEl   = document.getElementById('vvpat-timer');
+    const vvpatIdle      = document.getElementById('vvpat-idle-text');
+    const simResetBtn    = document.getElementById('sim-reset-btn');
+    const tallyTotal     = document.getElementById('tally-total');
+
+    const tallyMap = {
+        'Candidate A': document.getElementById('tally-a'),
+        'Candidate B': document.getElementById('tally-b'),
+        'Candidate C': document.getElementById('tally-c'),
+        'NOTA':        document.getElementById('tally-nota')
+    };
+
+    function simBumpCount(el) {
+        el.classList.add('bump');
+        setTimeout(() => el.classList.remove('bump'), 250);
+    }
+
+    function simEnableVoting() {
+        if (simState.voted) return; // already voted this round, wait for reset
+        simState.voteEnabled = true;
+        enableVoteBtn.disabled = true;
+        enableVoteBtn.textContent = '✅ Vote Enabled';
+        controlStatus.textContent = '🟢 Voting Enabled';
+        controlStatus.classList.replace('sim-status--idle', 'sim-status--active');
+        candidateBtns.forEach(btn => btn.disabled = false);
+    }
+
+    function simCastVote(candidate) {
+        if (!simState.voteEnabled || simState.voted) return;
+        simState.voted = true;
+
+        // Highlight selected button
+        candidateBtns.forEach(btn => {
+            btn.disabled = true;
+            btn.classList.remove('selected');
+            if (btn.dataset.candidate === candidate) btn.classList.add('selected');
+        });
+
+        // Show VVPAT
+        vvpatText.innerHTML = `You voted for: <strong>${candidate}</strong>`;
+        vvpatIdle.classList.add('hidden');
+        vvpatSlip.classList.remove('hidden');
+
+        // Countdown
+        let seconds = 3;
+        vvpatTimerEl.textContent = seconds;
+        clearInterval(simState.vvpatTimer);
+        simState.vvpatTimer = setInterval(() => {
+            seconds--;
+            if (vvpatTimerEl) vvpatTimerEl.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(simState.vvpatTimer);
+                vvpatSlip.classList.add('hidden');
+                vvpatIdle.classList.remove('hidden');
+                vvpatIdle.textContent = '✅ Vote sealed in EVM.';
+                vvpatIdle.style.background = '#d1fae5';
+                vvpatIdle.style.color = '#065f46';
+            }
+        }, 1000);
+
+        // Update tally
+        simState.tally[candidate]++;
+        const el = tallyMap[candidate];
+        if (el) {
+            el.textContent = simState.tally[candidate];
+            simBumpCount(el);
+        }
+        const total = Object.values(simState.tally).reduce((a, b) => a + b, 0);
+        if (tallyTotal) tallyTotal.textContent = total;
+
+        // Lock Control Unit button label
+        controlStatus.textContent = '🔴 Vote Cast — Awaiting Reset';
+        controlStatus.classList.replace('sim-status--active', 'sim-status--idle');
+    }
+
+    function simReset() {
+        simState.voteEnabled = false;
+        simState.voted = false;
+        clearInterval(simState.vvpatTimer);
+
+        enableVoteBtn.disabled = false;
+        enableVoteBtn.textContent = 'Enable Vote';
+        controlStatus.textContent = '🔴 Voting Disabled';
+        controlStatus.classList.replace('sim-status--active', 'sim-status--idle');
+
+        candidateBtns.forEach(btn => {
+            btn.disabled = true;
+            btn.classList.remove('selected');
+        });
+
+        vvpatSlip.classList.add('hidden');
+        vvpatIdle.classList.remove('hidden');
+        vvpatIdle.textContent = 'Awaiting vote…';
+        vvpatIdle.style.background = '';
+        vvpatIdle.style.color = '';
+    }
+
+    if (enableVoteBtn)  enableVoteBtn.addEventListener('click', simEnableVoting);
+    if (simResetBtn)    simResetBtn.addEventListener('click', simReset);
+    candidateBtns.forEach(btn => {
+        btn.addEventListener('click', () => simCastVote(btn.dataset.candidate));
+    });
+
 });

@@ -512,6 +512,184 @@ body.a11y-mode .btn {
     color: var(--primary-color);
 }
 
+/* ==========================================
+   ELECTION SIMULATION LAB
+   ========================================== */
+.sim-lab-section {
+    background: var(--bg-alt);
+}
+.sim-disclaimer {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.4rem 1rem;
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fbbf24;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+.dark-mode .sim-disclaimer {
+    background: #78350f;
+    color: #fde68a;
+    border-color: #d97706;
+}
+.sim-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+.sim-card {
+    padding: 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+    transition: transform var(--transition);
+}
+.sim-card:hover { transform: translateY(-4px); }
+.sim-step-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-color);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.9rem;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+}
+.sim-desc { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
+.sim-note  { font-size: 0.8rem;  color: var(--text-muted); font-style: italic; margin-top: auto; }
+.sim-action-btn { width: 100%; }
+.sim-status {
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+}
+.sim-status--idle    { background: #fee2e2; color: #991b1b; }
+.sim-status--active  { background: #d1fae5; color: #065f46; }
+.dark-mode .sim-status--idle   { background: #7f1d1d; color: #fca5a5; }
+.dark-mode .sim-status--active { background: #064e3b; color: #6ee7b7; }
+
+/* Candidate Buttons */
+.sim-candidates {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+.sim-candidate-btn {
+    width: 100%;
+    padding: 0.65rem 1rem;
+    border: 2px solid var(--glass-border);
+    border-radius: 8px;
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: not-allowed;
+    transition: var(--transition);
+    text-align: left;
+}
+.sim-candidate-btn:not(:disabled) {
+    cursor: pointer;
+    border-color: var(--primary-color);
+}
+.sim-candidate-btn:not(:disabled):hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateX(4px);
+}
+.sim-candidate-btn.selected {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(26, 86, 219, 0.3);
+}
+.sim-candidate-btn:disabled { opacity: 0.45; }
+
+/* VVPAT Slip */
+.vvpat-slip {
+    margin: 0.5rem 0;
+    animation: slideDown 0.4s ease;
+}
+.vvpat-slip-inner {
+    background: #fff;
+    color: #111;
+    border: 1px dashed #6b7280;
+    border-radius: 6px;
+    padding: 1rem;
+    font-size: 0.88rem;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+.vvpat-slip-inner hr { border-color: #d1d5db; margin: 0.5rem 0; }
+.vvpat-time { color: #6b7280; font-size: 0.78rem; margin: 0; }
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Tally */
+.sim-tally {
+    margin-top: 2rem;
+    padding: 2rem;
+    text-align: center;
+}
+.sim-tally h3 { margin-bottom: 1.25rem; }
+.sim-tally-grid { max-width: 500px; margin: 0 auto; }
+.tally-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.5rem;
+    border-bottom: 1px solid var(--glass-border);
+    font-size: 0.95rem;
+}
+.tally-count {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    min-width: 2rem;
+    text-align: right;
+    transition: transform 0.2s ease;
+}
+.tally-count.bump {
+    transform: scale(1.4);
+}
+.tally-total {
+    margin-top: 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-main);
+}
+
+/* Learning Points */
+.sim-learning {
+    margin-top: 1.5rem;
+    padding: 2rem;
+}
+.sim-learning h3 { margin-bottom: 1rem; }
+.sim-learning-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.sim-learning-list li {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    padding: 0.75rem 1rem;
+    background: var(--bg-main);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
 /* Chat Quick Chips */
 .chat-chip {
     white-space: nowrap;
