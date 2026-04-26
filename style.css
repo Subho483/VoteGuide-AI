@@ -886,18 +886,44 @@ footer p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
 footer p + p { margin-top: 0.35rem; }
 .small-text { font-size: 0.8rem; }
 
-/* Trust Signal Badges */
-.trust-badges {
+/* Trust Signal Badge Strip (Premium v4) */
+.trust-badge-strip {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 0.75rem;
-    padding: 1.25rem 5%;
-    background: var(--bg-alt);
-    border-top: 1px solid var(--glass-border);
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 0.8rem 5%;
+    background: linear-gradient(90deg, #10b9810a, #3b82f60a, #10b9810a);
     border-bottom: 1px solid var(--glass-border);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
 }
 .trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+.trust-badge:hover {
+    color: var(--primary-color);
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
+
+/* Chat Engine Badge */
+.chat-engine-badge {
+    font-size: 0.7rem;
+    text-align: center;
+    padding: 0.4rem;
+    background: var(--bg-alt);
+    border-top: 1px solid var(--glass-border);
+    color: var(--primary-color);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
