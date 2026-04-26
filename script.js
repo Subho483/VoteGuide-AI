@@ -285,26 +285,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 6. CIVIC QUIZ
     // ==========================================
-    const quizForm = document.getElementById('quiz-form');
+    const quizBtns = document.querySelectorAll('.quiz-btn');
     const quizResult = document.getElementById('quiz-result');
-    if (quizForm && quizResult) {
-        quizForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            let score = 0;
-            const q1 = document.querySelector('input[name="q1"]:checked');
-            const q2 = document.querySelector('input[name="q2"]:checked');
-            if (q1 && q1.value === "18") score++;
-            if (q2 && q2.value === "nota") score++;
-
-            quizResult.classList.remove('hidden');
-            if (score === 2) {
-                quizResult.innerHTML = `Score: 2/2. Excellent! You are fully informed.`;
-                quizResult.className = 'success-msg';
-            } else {
-                quizResult.innerHTML = `Score: ${score}/2. Read through the process guide again!`;
-                quizResult.className = 'error-msg';
-            }
-            updateProgress('quiz_completed');
+    if (quizBtns.length > 0 && quizResult) {
+        quizBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const isCorrect = btn.getAttribute('data-correct') === 'true';
+                quizResult.classList.remove('hidden');
+                if (isCorrect) {
+                    quizResult.innerHTML = `✅ <strong>Correct!</strong> You must be at least 18 years old to vote. Well done!`;
+                    quizResult.className = 'result-box success-msg';
+                    triggerConfetti();
+                } else {
+                    quizResult.innerHTML = `❌ <strong>Incorrect.</strong> The minimum voting age is 18 — at 17 you are not yet eligible.`;
+                    quizResult.className = 'result-box error-msg';
+                }
+                // Highlight selected, dim others
+                quizBtns.forEach(b => {
+                    b.disabled = true;
+                    b.style.opacity = b === btn ? '1' : '0.4';
+                });
+                updateProgress('quiz_completed');
+            });
         });
     }
 
@@ -644,7 +646,8 @@ document.addEventListener('DOMContentLoaded', () => {
         enableVoteBtn.disabled = false;
         enableVoteBtn.textContent = 'Enable Vote';
         controlStatus.textContent = '🔴 Voting Disabled';
-        controlStatus.classList.replace('sim-status--active', 'sim-status--idle');
+        // Forcefully set idle class regardless of current state
+        controlStatus.className = 'sim-status sim-status--idle';
 
         candidateBtns.forEach(btn => {
             btn.disabled = true;

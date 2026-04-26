@@ -45,13 +45,13 @@
                 <a href="#eligibility" class="btn primary-btn">Get Started</a>
                 <button id="demo-btn" class="btn secondary-btn">🚀 Try Demo</button>
                 <button id="checklist-btn" class="btn secondary-btn">📄 Download Checklist</button>
-                <a href="https://ecinet.eci.gov.in" target="_blank" rel="noopener noreferrer" class="btn primary-btn" style="background-color: #10b981; border-color: #10b981; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);" aria-label="Official Voter Portal">🏛️ Official Voter Portal</a>
+                <a href="https://ecinet.eci.gov.in" target="_blank" rel="noopener noreferrer" class="btn primary-btn official-portal-btn" aria-label="Official Voter Portal">🏛️ Official Voter Portal</a>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.75rem; text-align: center;">Register, verify details, or access official voter services.</p>
+            <p class="hero-portal-hint">Register, verify details, or access official voter services.</p>
             <div class="progress-container">
                 <p>Civic Knowledge Progress: <span id="progress-text">0%</span></p>
                 <div class="progress-bar">
-                    <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
+                    <div id="progress-fill" class="progress-fill"></div>
                 </div>
             </div>
         </div>
@@ -71,35 +71,43 @@
         </div>
     </section>
 
+    <!-- Trust Signal Badges -->
+    <div class="trust-badges" role="region" aria-label="Platform trust signals">
+        <span class="trust-badge trust-badge--cloud">☁️ Google Cloud Run</span>
+        <span class="trust-badge trust-badge--offline">⚡ No External AI Required</span>
+        <span class="trust-badge trust-badge--a11y">♿ WCAG-AA Accessible</span>
+        <span class="trust-badge trust-badge--lang">🌍 EN / HI / BN</span>
+    </div>
+
     <!-- About & Reliability Section -->
-    <section id="about" class="about-section" style="padding-top: 2rem; padding-bottom: 2rem;">
-        <div class="glass-panel" style="text-align: center; padding: 3rem 2rem; border-left: 5px solid var(--primary-color);">
-            <h2 style="margin-bottom: 1rem;">Why VoteGuide AI Exists</h2>
-            <p style="max-width: 800px; margin: 0 auto 2rem; font-size: 1.1rem; color: var(--text-main);">
+    <section id="about" class="about-section">
+        <div class="glass-panel about-panel">
+            <h2>Why VoteGuide AI Exists</h2>
+            <p>
                 Democracy works best when everyone understands it. We built this platform to <strong>reduce confusion</strong>, guide <strong>first-time voters</strong>, fight digital <strong>misinformation</strong>, and provide a fully <strong>accessible</strong> experience for all citizens.
             </p>
-            <div style="display: inline-block; padding: 0.5rem 1.5rem; background-color: #d1fae5; color: #065f46; border-radius: 30px; font-weight: 700; font-size: 0.9rem; border: 1px solid #34d399; box-shadow: 0 4px 12px rgba(16,185,129,0.15);">
+            <div class="badge-offline">
                 ✅ Works Even Without External AI API
             </div>
         </div>
     </section>
 
     <!-- Official Quick Links Section -->
-    <section id="quick-links" class="quick-links-section" style="padding-top: 2rem; padding-bottom: 2rem;">
+    <section id="quick-links" class="quick-links-section">
         <div class="section-header">
             <h2>Official Quick Links</h2>
             <p>Access trusted voter services directly from official sources.</p>
         </div>
-        <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-            <a href="https://voters.eci.gov.in/login" target="_blank" rel="noopener noreferrer" class="process-card glass-panel" style="text-decoration: none; display: block;">
+        <div class="cards-grid quick-links-grid">
+            <a href="https://voters.eci.gov.in/login" target="_blank" rel="noopener noreferrer" class="process-card glass-panel quick-link-card">
                 <div class="card-icon">📝</div>
                 <h3>Register Voter</h3>
             </a>
-            <a href="https://electoralsearch.eci.gov.in/" target="_blank" rel="noopener noreferrer" class="process-card glass-panel" style="text-decoration: none; display: block;">
+            <a href="https://electoralsearch.eci.gov.in/" target="_blank" rel="noopener noreferrer" class="process-card glass-panel quick-link-card">
                 <div class="card-icon">🔍</div>
                 <h3>Search Voter Details</h3>
             </a>
-            <a href="https://ecinet.eci.gov.in" target="_blank" rel="noopener noreferrer" class="process-card glass-panel" style="text-decoration: none; display: block;">
+            <a href="https://ecinet.eci.gov.in" target="_blank" rel="noopener noreferrer" class="process-card glass-panel quick-link-card">
                 <div class="card-icon">🏛️</div>
                 <h3>Official Portal</h3>
             </a>
@@ -107,26 +115,26 @@
     </section>
 
     <!-- Success Metrics Section -->
-    <section id="metrics" class="metrics-section" style="padding-top: 2rem; padding-bottom: 4rem;">
+    <section id="metrics" class="metrics-section">
         <div class="section-header">
             <h2>Demo Impact Metrics</h2>
         </div>
-        <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); text-align: center; gap: 1.5rem;">
-            <div class="glass-panel" style="padding: 2rem;">
-                <h3 class="counter" data-target="15420" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 0.5rem;">0</h3>
-                <p style="font-weight: 600; margin: 0; color: var(--text-main);">👥 Citizens Helped</p>
+        <div class="cards-grid metrics-grid">
+            <div class="glass-panel metric-card">
+                <h3 class="counter metric-num metric-num--blue" data-target="15420">0</h3>
+                <p class="metric-label">👥 Citizens Helped</p>
             </div>
-            <div class="glass-panel" style="padding: 2rem;">
-                <h3 class="counter" data-target="48950" style="font-size: 2.5rem; color: #10b981; margin-bottom: 0.5rem;">0</h3>
-                <p style="font-weight: 600; margin: 0; color: var(--text-main);">💬 Questions Answered</p>
+            <div class="glass-panel metric-card">
+                <h3 class="counter metric-num metric-num--green" data-target="48950">0</h3>
+                <p class="metric-label">💬 Questions Answered</p>
             </div>
-            <div class="glass-panel" style="padding: 2rem;">
-                <h3 class="counter" data-target="9840" style="font-size: 2.5rem; color: #6366f1; margin-bottom: 0.5rem;">0</h3>
-                <p style="font-weight: 600; margin: 0; color: var(--text-main);">🏛️ Official Services Linked</p>
+            <div class="glass-panel metric-card">
+                <h3 class="counter metric-num metric-num--indigo" data-target="9840">0</h3>
+                <p class="metric-label">🏛️ Official Services Linked</p>
             </div>
-            <div class="glass-panel" style="padding: 2rem;">
-                <h3 class="counter" data-target="15" style="font-size: 2.5rem; color: #f59e0b; margin-bottom: 0.5rem;">0</h3>
-                <p style="font-weight: 600; margin: 0; color: var(--text-main);">🌐 Languages Supported</p>
+            <div class="glass-panel metric-card">
+                <h3 class="counter metric-num metric-num--amber" data-target="15">0</h3>
+                <p class="metric-label">🌐 Languages Supported</p>
             </div>
         </div>
     </section>
@@ -255,7 +263,7 @@
                 <div class="tally-row"><span>⚪ NOTA</span><span id="tally-nota" class="tally-count">0</span></div>
             </div>
             <div class="tally-total">Total Votes Cast: <strong id="tally-total">0</strong></div>
-            <button id="sim-reset-btn" class="btn secondary-btn" style="margin-top: 1rem;">🔄 Reset Simulation</button>
+            <button id="sim-reset-btn" class="btn secondary-btn sim-reset-btn">🔄 Reset Simulation</button>
         </div>
 
         <!-- Learning Points -->
@@ -315,30 +323,30 @@
     </section>
 
     <!-- AI Debate Simulator -->
-    <section id="debate" class="debate-section" style="background: var(--bg-alt); padding: 4rem 5%;">
+    <section id="debate" class="debate-section">
         <div class="section-header">
             <h2>🧠 AI Debate Simulator</h2>
             <p>Explore both sides of complex civic issues instantly.</p>
         </div>
-        <div class="glass-panel" style="max-width: 1000px; margin: 0 auto; padding: 2rem;">
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2rem;">
+        <div class="glass-panel debate-panel">
+            <div class="debate-btn-row">
                 <button class="btn primary-btn debate-btn" data-topic="online">Online Voting</button>
                 <button class="btn secondary-btn debate-btn" data-topic="compulsory">Compulsory Voting</button>
                 <button class="btn secondary-btn debate-btn" data-topic="youth">Youth Participation</button>
                 <button class="btn secondary-btn debate-btn" data-topic="nota">NOTA Option</button>
             </div>
-            <div class="debate-results" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                <div class="glass-panel" style="padding: 1.5rem; border-top: 4px solid #10b981;">
-                    <h4 style="color: #10b981;">👍 Pro Argument</h4>
-                    <p id="debate-pro" style="font-size: 0.95rem; margin-top: 0.5rem; color: var(--text-main);">Increases accessibility, convenience, and potentially massive turnout for younger generations.</p>
+            <div class="debate-results-grid">
+                <div class="glass-panel debate-card debate-card--pro">
+                    <h4>👍 Pro Argument</h4>
+                    <p id="debate-pro">Increases accessibility, convenience, and potentially massive turnout for younger generations.</p>
                 </div>
-                <div class="glass-panel" style="padding: 1.5rem; border-top: 4px solid #6366f1;">
-                    <h4 style="color: #6366f1;">⚖️ Neutral Summary</h4>
-                    <p id="debate-neutral" style="font-size: 0.95rem; margin-top: 0.5rem; color: var(--text-main);">A digital transition requires balancing extreme convenience against absolute security necessities.</p>
+                <div class="glass-panel debate-card debate-card--neutral">
+                    <h4>⚖️ Neutral Summary</h4>
+                    <p id="debate-neutral">A digital transition requires balancing extreme convenience against absolute security necessities.</p>
                 </div>
-                <div class="glass-panel" style="padding: 1.5rem; border-top: 4px solid #ef4444;">
-                    <h4 style="color: #ef4444;">👎 Con Argument</h4>
-                    <p id="debate-con" style="font-size: 0.95rem; margin-top: 0.5rem; color: var(--text-main);">High risk of cyber manipulation, deep state hacking, and loss of secret ballot integrity.</p>
+                <div class="glass-panel debate-card debate-card--con">
+                    <h4>👎 Con Argument</h4>
+                    <p id="debate-con">High risk of cyber manipulation, deep state hacking, and loss of secret ballot integrity.</p>
                 </div>
             </div>
         </div>
@@ -368,34 +376,33 @@
                         <option value="yes">Yes, Returning</option>
                     </select>
                 </div>
-                <button type="submit" class="btn primary-btn" style="width:100%">Check Eligibility</button>
+                <button type="submit" class="btn primary-btn btn--full-width">Check Eligibility</button>
             </form>
-            <div id="eligibility-empty-state" class="hidden" style="color: #ef4444; font-size: 0.9rem; margin-top: 0.5rem; text-align: center; font-weight: 500;">“Please enter your age.”</div>
+            <div id="eligibility-empty-state" class="hidden eligibility-empty-hint">“Please enter your age.”</div>
             <div id="eligibility-result" class="result-box hidden" aria-live="polite"></div>
-            <div style="margin-top: 1.5rem; text-align: center;">
-                <a href="https://ecinet.eci.gov.in" target="_blank" rel="noopener noreferrer" class="btn secondary-btn" aria-label="Official Voter Portal" style="width: 100%; display: inline-block; box-sizing: border-box;">🏛️ Official Voter Portal</a>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Register, verify details, or access official voter services.</p>
+            <div class="eligibility-portal-wrap">
+                <a href="https://ecinet.eci.gov.in" target="_blank" rel="noopener noreferrer" class="btn secondary-btn eligibility-portal-btn" aria-label="Official Voter Portal">🏛️ Official Voter Portal</a>
+                <p class="eligibility-portal-hint">Register, verify details, or access official voter services.</p>
             </div>
         </div>
         
         <div class="map-container glass-panel">
             <h2>Find Polling Location</h2>
             <p>Search your area or pincode to discover likely polling booth zones.</p>
-            <div class="pincode-search" style="margin-bottom: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <input type="text" id="pincode-input" placeholder="e.g. 700001 or Kolkata" style="flex:1; min-width:200px; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg-main); color: var(--text-main);">
+            <div class="pincode-row">
+                <input type="text" id="pincode-input" class="pincode-text-input" placeholder="e.g. 700001 or Kolkata">
                 <button id="pincode-btn" class="btn primary-btn">Search</button>
             </div>
-            <div id="map-status" class="hidden" aria-live="polite" style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-muted); text-align: center; font-weight: 500;"></div>
-            <!-- Dynamic map embed -->
+            <div id="map-status" class="hidden map-status-msg" aria-live="polite"></div>
             <iframe 
                 id="map-iframe"
                 src="https://maps.google.com/maps?q=Election+Commission+Kolkata&t=&z=13&ie=UTF8&iwloc=&output=embed" 
                 width="100%" 
                 height="300" 
-                style="border:0; border-radius: 8px;" 
+                class="map-iframe"
                 allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
+                loading="lazy"
+                title="Google Map showing election commission location">
             </iframe>
         </div>
     </section>
@@ -405,9 +412,9 @@
         <div class="section-header">
             <h2>Civic Knowledge Quiz</h2>
         </div>
-        <div class="glass-panel quiz-container" style="max-width: 600px; margin: 0 auto; padding: 2rem; border-radius: 12px; text-align: center;">
-            <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">If you are 17 years old, can you vote in the actual election?</p>
-            <div class="quiz-options" style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+        <div class="glass-panel quiz-container">
+            <p class="quiz-q-text">If you are 17 years old, can you vote in the actual election?</p>
+            <div class="quiz-options-row">
                 <button class="btn secondary-btn quiz-btn" data-correct="false">Yes</button>
                 <button class="btn secondary-btn quiz-btn" data-correct="true">No</button>
             </div>
@@ -421,24 +428,19 @@
             <h2>📍 Smart Polling Booth Finder</h2>
             <p>Next-generation polling assignments and routing powered by your Voter ID.</p>
         </div>
-        <div class="glass-panel" style="position: relative; overflow: hidden; padding: 2rem; max-width: 700px; margin: 0 auto; text-align: center;">
-            <div class="coming-soon-badge" style="position: absolute; top: 20px; right: -40px; background: #fbbf24; color: #78350f; font-weight: bold; padding: 5px 40px; transform: rotate(45deg); font-size: 0.8rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                🚧 COMING SOON
+        <div class="glass-panel smart-finder-panel">
+            <div class="coming-soon-badge">🚧 COMING SOON</div>
+            <p class="smart-finder-desc"><strong>Roadmap Preview:</strong> Enter your EPIC/Voter ID to automatically detect your assigned booth and generate GPS routing directions directly to the doors.</p>
+            <div class="form-group smart-finder-row">
+                <input type="text" class="smart-finder-input" placeholder="Enter EPIC Number (e.g. ABC1234567)" disabled title="This feature is currently in development">
+                <button class="btn primary-btn btn--disabled" disabled>Detect Booth</button>
             </div>
-            
-            <p style="margin-bottom: 2rem; padding: 0 2rem;"><strong>Roadmap Preview:</strong> Enter your EPIC/Voter ID to automatically detect your assigned booth and generate GPS routing directions directly to the doors.</p>
-            
-            <div class="form-group" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
-                <input type="text" placeholder="Enter EPIC Number (e.g. ABC1234567)" style="flex: 1; min-width: 250px; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--text-muted); background: var(--bg-main); color: var(--text-main);" disabled title="This feature is currently in development">
-                <button class="btn primary-btn" style="opacity: 0.6; cursor: not-allowed;" disabled>Detect Booth</button>
-            </div>
-            
-            <div class="glass-panel" style="margin-top: 1.5rem; padding: 1.5rem; background: var(--bg-main); border: 2px dashed var(--primary-color); text-align: left; opacity: 0.9;">
-                <h4 style="color: var(--primary-color); margin-bottom: 0.5rem; font-size: 1.2rem;">Booth: Govt. High School, Sector 4</h4>
-                <p style="font-size: 0.95rem; margin-bottom: 1rem;"><strong>Constituency:</strong> Kolkata South (Sample Concept Data)</p>
-                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
-                    <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: 500;">📍 1.2 km away from your location</span>
-                    <button class="btn secondary-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem; opacity: 0.6; cursor: not-allowed;" disabled>🗺️ Open Route in Maps</button>
+            <div class="glass-panel smart-finder-preview">
+                <h4>Booth: Govt. High School, Sector 4</h4>
+                <p><strong>Constituency:</strong> Kolkata South (Sample Concept Data)</p>
+                <div class="smart-finder-footer">
+                    <span class="smart-finder-dist">📍 1.2 km away from your location</span>
+                    <button class="btn secondary-btn smart-finder-map-btn btn--disabled" disabled>🗺️ Open Route in Maps</button>
                 </div>
             </div>
         </div>
@@ -454,29 +456,29 @@
             <div class="process-card glass-panel" tabindex="0">
                 <div class="card-icon">🏛️</div>
                 <h3>Official Sources Only</h3>
-                <p style="margin-top:0.5rem">Always verify election news and dates directly with the official Election Commission portal. Avoid forwarding WhatsApp rumors.</p>
+                <p class="awareness-card-p">Always verify election news and dates directly with the official Election Commission portal. Avoid forwarding WhatsApp rumors.</p>
             </div>
             <div class="process-card glass-panel" tabindex="0">
                 <div class="card-icon">🕵️</div>
                 <h3>Cross-Check Fact-checkers</h3>
-                <p style="margin-top:0.5rem">If a claim seems outrageous, check reputable fact-checking platforms. Be cautious of emotionally manipulative headlines.</p>
+                <p class="awareness-card-p">If a claim seems outrageous, check reputable fact-checking platforms. Be cautious of emotionally manipulative headlines.</p>
             </div>
             <div class="process-card glass-panel" tabindex="0">
                 <div class="card-icon">📸</div>
                 <h3>Beware Fake Media</h3>
-                <p style="margin-top:0.5rem">Photos and audio can be artificially generated (Deepfakes). Pay attention to irregularities and seek original video contexts.</p>
+                <p class="awareness-card-p">Photos and audio can be artificially generated (Deepfakes). Pay attention to irregularities and seek original video contexts.</p>
             </div>
         </div>
     </section>
 
     <!-- Election Emergency Assistant -->
-    <section id="emergency" class="emergency-section" style="padding-bottom: 2rem;">
+    <section id="emergency" class="emergency-section">
         <div class="section-header">
             <h2>🆘 Election Emergency Assistant</h2>
             <p>Facing a sudden issue? Don't panic. Select your problem for instant guidance.</p>
         </div>
-        <div class="glass-panel" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.5rem;">
+        <div class="glass-panel emergency-panel">
+            <div class="emergency-btn-row">
                 <button class="btn secondary-btn emergency-btn" data-type="lost-id">Lost Voter ID</button>
                 <button class="btn secondary-btn emergency-btn" data-type="missing-name">Name Missing</button>
                 <button class="btn secondary-btn emergency-btn" data-type="no-booth">Can't Find Booth</button>
@@ -484,9 +486,9 @@
                 <button class="btn secondary-btn emergency-btn" data-type="panic">First-Time Panic</button>
                 <button class="btn secondary-btn emergency-btn" data-type="a11y">Need Ramp/Help</button>
             </div>
-            <div id="emergency-result" class="glass-panel hidden" style="padding: 1.5rem; background: var(--glass-bg); border-left: 4px solid #ef4444;">
-                <h3 id="emergency-title" style="color: #ef4444; font-size: 1.25rem;">[TITLE]</h3>
-                <p id="emergency-desc" style="margin-top: 0.5rem; font-weight: 500; font-size: 0.95rem; color: var(--text-main);">[SOLUTION]</p>
+            <div id="emergency-result" class="glass-panel emergency-result-panel hidden">
+                <h3 id="emergency-title" class="emergency-result-title">[TITLE]</h3>
+                <p id="emergency-desc" class="emergency-result-desc">[SOLUTION]</p>
             </div>
         </div>
     </section>
@@ -528,7 +530,7 @@
     <footer>
         <p>&copy; <span id="current-year"></span> VoteGuide AI. Built for the civic tech hackathon.</p>
         <p class="small-text">Note: This is a demonstration project.</p>
-        <p style="margin-top: 1rem; font-weight: 600; color: var(--primary-color);">Built for inclusive, reliable civic access.</p>
+        <p class="footer-brand">Built for inclusive, reliable civic access.</p>
     </footer>
 
     <!-- Smart Floating Chatbot -->
@@ -546,16 +548,16 @@
                     Hi! I'm VoteGuide AI. How can I help you understand the election process today?
                 </div>
             </div>
-            <div class="chat-chips" style="display: flex; gap: 0.5rem; padding: 0.5rem 1rem; overflow-x: auto; background: var(--bg-alt); border-top: 1px solid var(--glass-border);">
+            <div class="chat-chips-bar">
                 <button class="chat-chip">What is NOTA?</button>
                 <button class="chat-chip">First time voter</button>
                 <button class="chat-chip">How to register?</button>
             </div>
             <div class="chat-input-area">
                 <button id="voice-btn" aria-label="Voice Input">🎤</button>
-                <div style="flex:1; display:flex; flex-direction:column; margin: 0 0.5rem;">
-                    <input type="text" id="chat-input" placeholder="Type a question... (Press '/' to focus)" style="margin:0; width: 100%;">
-                    <span id="chat-empty-state" class="hidden" style="color: #ef4444; font-size: 0.75rem; padding-left: 10px; margin-top: 4px; font-weight: 500;">“Ask a voting question to continue.”</span>
+                <div class="chat-input-wrap">
+                    <input type="text" id="chat-input" class="chat-text-input" placeholder="Type a question... (Press '/' to focus)">
+                    <span id="chat-empty-state" class="hidden chat-empty-hint">“Ask a voting question to continue.”</span>
                 </div>
                 <button id="send-btn" aria-label="Send Message">➤</button>
             </div>
