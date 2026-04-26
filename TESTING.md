@@ -1,9 +1,9 @@
-# 🧪 VoteGuide AI — Comprehensive Test Report v4.0.0
+# 🧪 VoteGuide AI — Comprehensive Test Report
 
 > **Engineering Status:** 100% Passing  
 > **Automated Tests:** 38 Production Cases  
 > **Framework:** Node.js Native Test Runner (`node:test`)  
-> **Google Services Coverage:** Gemini Search Grounding, Cloud Storage, Cloud Logging, Maps JS, Analytics  
+> **Coverage:** NLP Logic, HTTP API, Accessibility, Security, UX  
 
 ---
 
@@ -30,14 +30,16 @@ node --test --reporter=spec tests/
 - **Knowledge Base Integrity:** Ensures every intent has unique IDs and valid keyword arrays.
 
 #### 🌐 HTTP API Integration Tests (`tests/api.test.js`) — 12 Cases
-- **POST /api/chat:** Validates 200 responses, body structure, and "engine" metadata (Gemini Grounded / Offline).
+- **POST /api/chat:** Validates 200 responses, body structure, and "engine" metadata (Gemini/Offline).
 - **Validation:** Confirms 400 Bad Request for empty, missing, or non-string inputs.
 - **Security:** Verifies rate-limiter headers and XSS sanitization at the API boundary.
-- **Health System:** Ensures `/health` returns 200 with JSON status, engine type (Gemini Grounded), and service list.
+- **Health System:** Ensures `/health` returns 200 with JSON status, engine type, and version.
 
 ---
 
 ## 🛠️ 2. Manual Quality Assurance (UX/UI)
+
+Beyond automated code checks, VoteGuide AI undergoes rigorous manual QA for visual and interactive excellence.
 
 ### 2.1 — Accessibility (WCAG 2.1 AA)
 | ID | Check | Tool | Result |
@@ -73,36 +75,22 @@ node --test --reporter=spec tests/
 
 | Category | Score | Metric |
 |---|---|---|
-| **Performance** | 92+ | First Contentful Paint: < 0.7s |
-| **Accessibility** | 98+ | Full ARIA coverage |
+| **Performance** | 90+ | First Contentful Paint: < 0.8s |
+| **Accessibility** | 96+ | Full ARIA coverage |
 | **Best Practices** | 100 | HTTPS + modern browser features |
 | **SEO** | 100 | Meta tags + Structured Data (JSON-LD) |
 
 ---
 
-## ☁️ 5. Google Services Integration Map
+## 🔄 5. CI/CD Integration
 
-| Service | Usage | Signal Strength |
-|---|---|---|
-| **Cloud Run** | Containerized Microservice | 🔥 Critical |
-| **Gemini AI** | Grounded Civic Chatbot | 🔥 Critical |
-| **Search Grounding** | Real-time Election Data | 🔥 High |
-| **Cloud Storage** | Persistent Asset Serving | 🔥 High |
-| **Cloud Logging** | Enterprise Observability | 🔥 High |
-| **Maps JS** | Polling Booth discovery | 🔥 High |
-| **Analytics** | Citizen engagement tracking | 🔥 High |
-| **Translate** | Multilingual inclusivity | 🔥 High |
+Every commit triggers the **Cloud Build** pipeline (defined in `cloudbuild.yaml`):
+1. **Environment Setup:** Node.js 18 environment initialization.
+2. **Dependency Audit:** `npm ci` ensures lockfile integrity.
+3. **Automated Testing:** `npm test` executes the 38-case suite.
+4. **Container Build:** Buildpacks generate a production image.
+5. **Auto-Deploy:** If tests pass, the service is promoted to Cloud Run.
 
 ---
 
-## 🔄 6. CI/CD Integration
-
-Every commit triggers the **Cloud Build** pipeline:
-1. **Dependency Audit:** `npm ci` ensures lockfile integrity.
-2. **Automated Testing:** `npm test` executes the 38-case suite.
-3. **Container Build:** Buildpacks generate a production image.
-4. **Auto-Deploy:** Promoted to Cloud Run.
-
----
-
-*VoteGuide AI — Engineering Quality Document · Version 4.0.0 · April 2026*
+*VoteGuide AI — Engineering Quality Document · Version 3.0 · April 2026*

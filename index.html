@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoteGuide AI — Empowering Citizens, Simplifying Democracy</title>
-    
-    <!-- SEO & Metadata -->
     <meta name="description" content="VoteGuide AI: Your free, offline-first civic assistant. Check voter eligibility, understand Indian elections, find polling booths, and vote with confidence.">
-    <meta name="keywords" content="voter guide, election, India, eligibility, voting, NOTA, EVM, VVPAT, civic, democracy, google cloud, gemini ai">
+    <meta name="keywords" content="voter guide, election, India, eligibility, voting, NOTA, EVM, VVPAT, civic, democracy">
     <meta name="author" content="Subho Saha">
     <meta name="theme-color" content="#10b981">
 
@@ -23,22 +21,13 @@
     <!-- Emoji Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗳️</text></svg>">
 
-    <!-- Google Services: Analytics (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HACKATHON-ID"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-HACKATHON-ID');
-    </script>
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
 
-    <!-- Google Services: Fonts (Inter) -->
+    <!-- Google Fonts (Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="style.css">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -46,21 +35,12 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "VoteGuide AI",
-      "description": "Enterprise-grade civic intelligence platform for Indian voters powered by Google Gemini 1.5 Flash with real-time Google Search Grounding.",
+      "description": "Offline-first civic intelligence platform for Indian voters powered by Google Gemini AI.",
       "url": "https://voteguide-ai-1047946370465.us-central1.run.app",
       "applicationCategory": "UtilitiesApplication",
       "operatingSystem": "All",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-      "author": { 
-        "@type": "Person", 
-        "name": "Subho Saha",
-        "url": "https://github.com/Subho483"
-      },
-      "provider": {
-        "@type": "Organization",
-        "name": "Google Cloud",
-        "url": "https://cloud.google.com"
-      }
+      "author": { "@type": "Person", "name": "Subho Saha" }
     }
     </script>
 </head>
@@ -70,7 +50,7 @@
     <a href="#main-content" class="skip-nav">Skip to main content</a>
 
     <!-- Navbar -->
-    <nav class="navbar" role="navigation" aria-label="Main Navigation">
+    <nav class="navbar">
         <div class="logo">🗳️ VoteGuide AI</div>
         <div class="nav-links">
             <a href="#hero">Home</a>
@@ -81,27 +61,18 @@
         </div>
         <div class="nav-actions">
             <!-- Google Translate Placeholder -->
-            <div id="google_translate_element" title="Language Selector"></div>
+            <div id="google_translate_element"></div>
             <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
             <button id="a11y-toggle" aria-label="Toggle Accessibility Mode" title="Accessibility Mode">♿</button>
             <button class="hamburger" id="hamburger-menu" aria-label="Menu">☰</button>
         </div>
     </nav>
-    
-    <!-- Trust Signal Badge Strip -->
-    <div class="trust-badge-strip">
-        <div class="trust-badge">☁️ Hosted on Google Cloud Run</div>
-        <div class="trust-badge">🧠 Powered by Gemini 1.5 Flash</div>
-        <div class="trust-badge">♿ WCAG 2.1 AA Compliant</div>
-        <div class="trust-badge">🌍 Multilingual Support</div>
-        <div class="trust-badge">🛰️ Real-time Search Grounding</div>
-    </div>
 
     <!-- Hero Section -->
     <section id="main-content" class="hero" role="main" aria-label="Hero — VoteGuide AI introduction">
         <div class="hero-content">
             <h1>Understand Elections <span class="highlight">Easily</span></h1>
-            <p>Learn voting, timelines, eligibility, and election steps in minutes. Your smart, friendly guide to participating in democracy — powered by Google Cloud.</p>
+            <p>Learn voting, timelines, eligibility, and election steps in minutes. Your smart, friendly guide to participating in democracy.</p>
             <div class="hero-buttons">
                 <a href="#eligibility" class="btn primary-btn">Get Started</a>
                 <button id="demo-btn" class="btn secondary-btn">🚀 Try Demo</button>
@@ -117,326 +88,522 @@
             </div>
         </div>
         <div class="hero-graphic">
-            <div class="glass-card">
-                <h3>Voter Awareness Stats</h3>
-                <p>India has over 900 million registered voters.</p>
-                <div class="stat-bar"><div class="stat-fill" style="width: 67%;"></div></div>
-                <small>Average Turnout: ~67%</small>
+            <!-- Simple decorative element to keep size small -->
+            <div class="glass-orb orb-1"></div>
+            <div class="glass-orb orb-2"></div>
+            <div class="glass-card decorative-card">
+                <h3>Voter Checklist</h3>
+                <ul>
+                    <li>✅ Check Eligibility</li>
+                    <li>✅ Register to Vote</li>
+                    <li>✅ Find Polling Booth</li>
+                    <li>✅ Cast Your Vote</li>
+                </ul>
             </div>
-            <div class="floating-badge">🗳️ 100% Secure</div>
         </div>
     </section>
 
-    <!-- Main Content -->
-    <div class="container">
+    <!-- Trust Signal Badges -->
+    <div class="trust-badges" role="region" aria-label="Platform trust signals">
+        <span class="trust-badge trust-badge--cloud">☁️ Google Cloud Run</span>
+        <span class="trust-badge trust-badge--offline">⚡ No External AI Required</span>
+        <span class="trust-badge trust-badge--a11y">♿ WCAG-AA Accessible</span>
+        <span class="trust-badge trust-badge--lang">🌍 EN / HI / BN</span>
+    </div>
+
+    <!-- About & Reliability Section -->
+    <section id="about" class="about-section">
+        <div class="glass-panel about-panel">
+            <h2>Why VoteGuide AI Exists</h2>
+            <p>
+                Democracy works best when everyone understands it. We built this platform to <strong>reduce confusion</strong>, guide <strong>first-time voters</strong>, fight digital <strong>misinformation</strong>, and provide a fully <strong>accessible</strong> experience for all citizens.
+            </p>
+            <div class="badge-offline">
+                ✅ Works Even Without External AI API
+            </div>
+        </div>
+    </section>
+
+    <!-- Official Quick Links Section -->
+    <section id="quick-links" class="quick-links-section">
+        <div class="section-header">
+            <h2>Official Quick Links</h2>
+            <p>Access trusted voter services directly from official sources.</p>
+        </div>
+        <div class="cards-grid quick-links-grid">
+            <a href="https://voters.eci.gov.in/login" target="_blank" rel="noopener noreferrer" class="process-card glass-panel quick-link-card">
+                <div class="card-icon">📝</div>
+                <h3>Register Voter</h3>
+            </a>
+            <a href="https://electoralsearch.eci.gov.in/" target="_blank" rel="noopener noreferrer" class="process-card glass-panel quick-link-card">
+                <div class="card-icon">🔍</div>
+                <h3>Search Voter Details</h3>
+            </a>
+            <a href="https://ecinet.eci.gov.in" target="_blank" rel="noopener noreferrer" class="process-card glass-panel quick-link-card">
+                <div class="card-icon">🏛️</div>
+                <h3>Official Portal</h3>
+            </a>
+        </div>
+    </section>
+
+    <!-- Success Metrics Section -->
+    <section id="metrics" class="metrics-section">
+        <div class="section-header">
+            <h2>Demo Impact Metrics</h2>
+        </div>
+        <div class="cards-grid metrics-grid">
+            <div class="glass-panel metric-card">
+                <h3 class="counter metric-num metric-num--blue" data-target="15420">0</h3>
+                <p class="metric-label">👥 Citizens Helped</p>
+            </div>
+            <div class="glass-panel metric-card">
+                <h3 class="counter metric-num metric-num--green" data-target="48950">0</h3>
+                <p class="metric-label">💬 Questions Answered</p>
+            </div>
+            <div class="glass-panel metric-card">
+                <h3 class="counter metric-num metric-num--indigo" data-target="9840">0</h3>
+                <p class="metric-label">🏛️ Official Services Linked</p>
+            </div>
+            <div class="glass-panel metric-card">
+                <h3 class="counter metric-num metric-num--amber" data-target="15">0</h3>
+                <p class="metric-label">🌐 Languages Supported</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Process Guide -->
+    <section id="process" class="process-section">
+        <div class="section-header">
+            <h2>The Election Process</h2>
+            <p>6 Simple steps to understand how democracy works.</p>
+        </div>
+        <div class="cards-grid">
+            <!-- Step 1 -->
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">📝</div>
+                <h3>1. Voter Registration</h3>
+                <div class="card-details">
+                    <p>Register online or offline via election commission. Check validity of voter ID.</p>
+                </div>
+            </div>
+            <!-- Step 2 -->
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">🤝</div>
+                <h3>2. Candidate Nomination</h3>
+                <div class="card-details">
+                    <p>Candidates file their nomination papers, declare assets, and undergo scrutiny.</p>
+                </div>
+            </div>
+            <!-- Step 3 -->
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">📢</div>
+                <h3>3. Campaign Period</h3>
+                <div class="card-details">
+                    <p>Parties hold rallies and share manifestos. A silent period applies 48 hrs before voting.</p>
+                </div>
+            </div>
+            <!-- Step 4 -->
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">🗳️</div>
+                <h3>4. Voting Day</h3>
+                <div class="card-details">
+                    <p>Go to the polling booth, show ID, press the button on the EVM (or ballot), and get the ink mark.</p>
+                </div>
+            </div>
+            <!-- Step 5 -->
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">🔢</div>
+                <h3>5. Counting</h3>
+                <div class="card-details">
+                    <p>EVMs are opened securely and votes are counted in the presence of election observers.</p>
+                </div>
+            </div>
+            <!-- Step 6 -->
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">🏆</div>
+                <h3>6. Results</h3>
+                <div class="card-details">
+                    <p>Candidates with majority votes are declared winners and form the government.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Election Simulation Lab -->
+    <section id="sim-lab" class="sim-lab-section">
+        <div class="section-header">
+            <h2>🗳️ Election Simulation Lab</h2>
+            <p>Experience how voting machines work in a simple guided demo.</p>
+            <div class="sim-disclaimer">⚠️ This is an educational simulation, not a real voting system.</div>
+        </div>
+
+        <div class="sim-grid">
+
+            <!-- Step 1: Control Unit -->
+            <div class="sim-card glass-panel" id="sim-control-unit">
+                <div class="sim-step-badge">Step 1</div>
+                <div class="card-icon">🖥️</div>
+                <h3>Control Unit</h3>
+                <p class="sim-desc">The Presiding Officer enables voting before each voter casts their ballot.</p>
+                <button id="enable-vote-btn" class="btn primary-btn sim-action-btn">Enable Vote</button>
+                <div id="control-status" class="sim-status sim-status--idle">🔴 Voting Disabled</div>
+                <div class="sim-note">👮 Only an authorised officer can press this.</div>
+            </div>
+
+            <!-- Step 2: Ballot Unit -->
+            <div class="sim-card glass-panel" id="sim-ballot-unit">
+                <div class="sim-step-badge">Step 2</div>
+                <div class="card-icon">🗳️</div>
+                <h3>Ballot Unit</h3>
+                <p class="sim-desc">The voter sees candidate buttons and presses one to cast their vote.</p>
+                <div class="sim-candidates" id="sim-candidates">
+                    <button class="sim-candidate-btn" data-candidate="Candidate A" disabled>🔵 Candidate A</button>
+                    <button class="sim-candidate-btn" data-candidate="Candidate B" disabled>🟢 Candidate B</button>
+                    <button class="sim-candidate-btn" data-candidate="Candidate C" disabled>🟡 Candidate C</button>
+                    <button class="sim-candidate-btn" data-candidate="NOTA" disabled>⚪ NOTA</button>
+                </div>
+                <div class="sim-note">🔒 Buttons unlock only after Step 1.</div>
+            </div>
+
+            <!-- Step 3: VVPAT -->
+            <div class="sim-card glass-panel" id="sim-vvpat">
+                <div class="sim-step-badge">Step 3</div>
+                <div class="card-icon">🧻</div>
+                <h3>VVPAT Slip</h3>
+                <p class="sim-desc">A paper slip appears for 3 seconds confirming your vote before it is sealed.</p>
+                <div id="vvpat-slip" class="vvpat-slip hidden">
+                    <div class="vvpat-slip-inner">
+                        <p>🗳️ Official Vote Receipt</p>
+                        <hr>
+                        <p id="vvpat-candidate-text">You voted for: <strong>—</strong></p>
+                        <p class="vvpat-time">Slip disappears in <span id="vvpat-timer">3</span>s</p>
+                    </div>
+                </div>
+                <div id="vvpat-idle-text" class="sim-status sim-status--idle">Awaiting vote…</div>
+                <div class="sim-note">📋 VVPAT improves transparency and auditability.</div>
+            </div>
+
+        </div>
+
+        <!-- Tally Panel -->
+        <div class="sim-tally glass-panel">
+            <h3>📊 Live Vote Tally (Demo)</h3>
+            <div class="sim-tally-grid" id="sim-tally-grid">
+                <div class="tally-row"><span>🔵 Candidate A</span><span id="tally-a" class="tally-count">0</span></div>
+                <div class="tally-row"><span>🟢 Candidate B</span><span id="tally-b" class="tally-count">0</span></div>
+                <div class="tally-row"><span>🟡 Candidate C</span><span id="tally-c" class="tally-count">0</span></div>
+                <div class="tally-row"><span>⚪ NOTA</span><span id="tally-nota" class="tally-count">0</span></div>
+            </div>
+            <div class="tally-total">Total Votes Cast: <strong id="tally-total">0</strong></div>
+            <button id="sim-reset-btn" class="btn secondary-btn sim-reset-btn">🔄 Reset Simulation</button>
+        </div>
+
+        <!-- Learning Points -->
+        <div class="sim-learning glass-panel">
+            <h3>📚 Key Learning Points</h3>
+            <ul class="sim-learning-list">
+                <li>✅ <strong>One voter, one vote:</strong> The officer enables the machine for each voter individually.</li>
+                <li>✅ <strong>VVPAT improves transparency:</strong> The voter can verify their vote on the slip before it is sealed.</li>
+                <li>✅ <strong>Officer controls flow:</strong> The Control Unit is managed by the Presiding Officer, not the voter.</li>
+                <li>✅ <strong>Votes remain secure:</strong> Once cast, votes are electronically sealed inside the EVM.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" class="timeline-section">
+        <div class="section-header">
+            <h2>Election Timeline Overview</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-panel">
+                    <h4>Day -90</h4>
+                    <p>Voter Registration Deadline</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-panel">
+                    <h4>Day -30</h4>
+                    <p>Candidate Nominations Close</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-panel">
+                    <h4>Day -2</h4>
+                    <p>Campaign Silence Period Starts</p>
+                </div>
+            </div>
+            <div class="timeline-item highlight-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-panel">
+                    <h4>Polling Day</h4>
+                    <p>Go Cast Your Vote!</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-panel">
+                    <h4>Day +2</h4>
+                    <p>Results Declaration</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Debate Simulator -->
+    <section id="debate" class="debate-section">
+        <div class="section-header">
+            <h2>🧠 AI Debate Simulator</h2>
+            <p>Explore both sides of complex civic issues instantly.</p>
+        </div>
+        <div class="glass-panel debate-panel">
+            <div class="debate-btn-row">
+                <button class="btn primary-btn debate-btn" data-topic="online">Online Voting</button>
+                <button class="btn secondary-btn debate-btn" data-topic="compulsory">Compulsory Voting</button>
+                <button class="btn secondary-btn debate-btn" data-topic="youth">Youth Participation</button>
+                <button class="btn secondary-btn debate-btn" data-topic="nota">NOTA Option</button>
+            </div>
+            <div class="debate-results-grid">
+                <div class="glass-panel debate-card debate-card--pro">
+                    <h4>👍 Pro Argument</h4>
+                    <p id="debate-pro">Increases accessibility, convenience, and potentially massive turnout for younger generations.</p>
+                </div>
+                <div class="glass-panel debate-card debate-card--neutral">
+                    <h4>⚖️ Neutral Summary</h4>
+                    <p id="debate-neutral">A digital transition requires balancing extreme convenience against absolute security necessities.</p>
+                </div>
+                <div class="glass-panel debate-card debate-card--con">
+                    <h4>👎 Con Argument</h4>
+                    <p id="debate-con">High risk of cyber manipulation, deep state hacking, and loss of secret ballot integrity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eligibility Checker & Maps -->
+    <section id="eligibility" class="eligibility-map-section">
+        <div class="eligibility-container glass-panel">
+            <h2>Eligibility Checker</h2>
+            <form id="eligibility-form">
+                <div class="form-group">
+                    <label for="age">What is your age?</label>
+                    <input type="number" id="age" name="age" required min="1" max="120">
+                </div>
+                <div class="form-group">
+                    <label for="citizen">Are you a citizen of the country?</label>
+                    <select id="citizen" name="citizen" required>
+                        <option value="">Select option...</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="history">Have you voted before?</label>
+                    <select id="history" name="history">
+                        <option value="no">No, First Time</option>
+                        <option value="yes">Yes, Returning</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn primary-btn btn--full-width">Check Eligibility</button>
+            </form>
+            <div id="eligibility-empty-state" class="hidden eligibility-empty-hint">“Please enter your age.”</div>
+            <div id="eligibility-result" class="result-box hidden" aria-live="polite"></div>
+            <div class="eligibility-portal-wrap">
+                <a href="https://ecinet.eci.gov.in" target="_blank" rel="noopener noreferrer" class="btn secondary-btn eligibility-portal-btn" aria-label="Official Voter Portal">🏛️ Official Voter Portal</a>
+                <p class="eligibility-portal-hint">Register, verify details, or access official voter services.</p>
+            </div>
+        </div>
         
-        <!-- Quick Stats / Badges -->
-        <div class="stats-row">
-            <div class="stat-item card">
-                <span class="stat-val">18+</span>
-                <span class="stat-label">Min. Age to Vote</span>
+        <div class="map-container glass-panel">
+            <h2>Find Polling Location</h2>
+            <p>Search your area or pincode to discover likely polling booth zones.</p>
+            <div class="pincode-row">
+                <input type="text" id="pincode-input" class="pincode-text-input" placeholder="e.g. 700001 or Kolkata">
+                <button id="pincode-btn" class="btn primary-btn">Search</button>
             </div>
-            <div class="stat-item card">
-                <span class="stat-val">EPIC</span>
-                <span class="stat-label">Voter ID Acronym</span>
+            <div id="map-status" class="hidden map-status-msg" aria-live="polite"></div>
+            <iframe 
+                id="map-iframe"
+                src="https://maps.google.com/maps?q=Election+Commission+Kolkata&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+                width="100%" 
+                height="300" 
+                class="map-iframe"
+                allowfullscreen="" 
+                loading="lazy"
+                title="Google Map showing election commission location">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="quiz-section">
+        <div class="section-header">
+            <h2>Civic Knowledge Quiz</h2>
+        </div>
+        <div class="glass-panel quiz-container">
+            <p class="quiz-q-text">If you are 17 years old, can you vote in the actual election?</p>
+            <div class="quiz-options-row">
+                <button class="btn secondary-btn quiz-btn" data-correct="false">Yes</button>
+                <button class="btn secondary-btn quiz-btn" data-correct="true">No</button>
             </div>
-            <div class="stat-item card">
-                <span class="stat-val">NOTA</span>
-                <span class="stat-label">Reject All Option</span>
+            <div id="quiz-result" class="result-box hidden"></div>
+        </div>
+    </section>
+
+    <!-- Smart Polling Finder (Coming Soon Simulation) -->
+    <section id="smart-finder" class="smart-finder-section">
+        <div class="section-header">
+            <h2>📍 Smart Polling Booth Finder</h2>
+            <p>Next-generation polling assignments and routing powered by your Voter ID.</p>
+        </div>
+        <div class="glass-panel smart-finder-panel">
+            <div class="coming-soon-badge">🚧 COMING SOON</div>
+            <p class="smart-finder-desc"><strong>Roadmap Preview:</strong> Enter your EPIC/Voter ID to automatically detect your assigned booth and generate GPS routing directions directly to the doors.</p>
+            <div class="form-group smart-finder-row">
+                <input type="text" class="smart-finder-input" placeholder="Enter EPIC Number (e.g. ABC1234567)" disabled title="This feature is currently in development">
+                <button class="btn primary-btn btn--disabled" disabled>Detect Booth</button>
             </div>
-            <div class="stat-item card">
-                <span class="stat-val">VVPAT</span>
-                <span class="stat-label">Paper Verification</span>
+            <div class="glass-panel smart-finder-preview">
+                <h4>Booth: Govt. High School, Sector 4</h4>
+                <p><strong>Constituency:</strong> Kolkata South (Sample Concept Data)</p>
+                <div class="smart-finder-footer">
+                    <span class="smart-finder-dist">📍 1.2 km away from your location</span>
+                    <button class="btn secondary-btn smart-finder-map-btn btn--disabled" disabled>🗺️ Open Route in Maps</button>
+                </div>
             </div>
         </div>
+    </section>
 
-        <!-- 3-Step Process -->
-        <section id="process" class="process-section">
-            <h2 class="section-title">The 3-Step Voting Journey</h2>
-            <div class="process-grid">
-                <div class="process-card card" tabindex="0">
-                    <div class="step-num">1</div>
-                    <h3>Registration</h3>
-                    <p>Apply for your Voter ID (EPIC) online or via Form 6. Verify your name in the electoral roll before election day.</p>
-                </div>
-                <div class="process-card card" tabindex="0">
-                    <div class="step-num">2</div>
-                    <h3>Preparation</h3>
-                    <p>Find your assigned polling booth using our Smart Finder. Research candidates and understand the EVM process.</p>
-                </div>
-                <div class="process-card card" tabindex="0">
-                    <div class="step-num">3</div>
-                    <h3>Participation</h3>
-                    <p>On election day, carry your ID, join the queue, and cast your vote in secrecy within the voting compartment.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Eligibility Checker -->
-        <section id="eligibility" class="eligibility-section">
-            <h2 class="section-title">Am I Eligible to Vote?</h2>
-            <div class="checker-container card">
-                <p>Answer 3 quick questions to check your status for the upcoming elections.</p>
-                <div class="checker-form">
-                    <div class="form-group">
-                        <label for="age-input">What is your age?</label>
-                        <input type="number" id="age-input" placeholder="Enter your age" min="0" max="150">
-                    </div>
-                    <div class="form-group">
-                        <label for="citizen-select">Are you a citizen?</label>
-                        <select id="citizen-select">
-                            <option value="yes">Yes, I am a citizen</option>
-                            <option value="no">No, I am a resident</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="history-select">Voter History?</label>
-                        <select id="history-select">
-                            <option value="returning">I have voted before</option>
-                            <option value="first">This is my first time</option>
-                        </select>
-                    </div>
-                    <button id="check-btn" class="btn primary-btn">Check Status</button>
-                    <div id="check-result" class="hidden result-panel" aria-live="polite"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Dynamic Content Row -->
-        <div class="dynamic-row">
-            <!-- Timeline -->
-            <section id="timeline" class="timeline-container card">
-                <h2>Election Timeline</h2>
-                <div class="timeline-item">
-                    <div class="time-point"></div>
-                    <div class="time-content">
-                        <h4>Notification</h4>
-                        <p>Official dates announced by Election Commission.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time-point"></div>
-                    <div class="time-content">
-                        <h4>Nominations</h4>
-                        <p>Candidates file their papers and assets.</p>
-                    </div>
-                </div>
-                <div class="timeline-item active">
-                    <div class="time-point"></div>
-                    <div class="time-content">
-                        <h4>Campaigning</h4>
-                        <p>Political rallies and manifesto releases.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time-point"></div>
-                    <div class="time-content">
-                        <h4>Polling Day</h4>
-                        <p>Citizens go to booths to cast their secret votes.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time-point"></div>
-                    <div class="time-content">
-                        <h4>Counting</h4>
-                        <p>Votes tallied and winners declared.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Quiz -->
-            <section class="quiz-container card">
-                <h2>Civic Quick Quiz</h2>
-                <p id="quiz-question">Can you vote if you don't have a physical Voter ID but your name is in the list?</p>
-                <div class="quiz-actions">
-                    <button class="btn secondary-btn quiz-opt" data-correct="true">Yes</button>
-                    <button class="btn secondary-btn quiz-opt" data-correct="false">No</button>
-                </div>
-                <div id="quiz-feedback" class="hidden"></div>
-            </section>
+    <!-- Fake News Awareness Section -->
+    <section id="awareness" class="awareness-section">
+        <div class="section-header">
+            <h2>🚨 Fake News Awareness</h2>
+            <p>Misinformation damages democracy. Learn how to identify and stop it.</p>
         </div>
-
-        <!-- Election Simulation Lab -->
-        <section id="sim-lab" class="sim-lab-section">
-            <h2 class="section-title">Election Simulation Lab</h2>
-            <div class="sim-grid">
-                <div class="evm-card card">
-                    <h3>Electronic Voting Machine (EVM)</h3>
-                    <p class="sim-hint">1. Click 'Enable Vote' (simulates officer verification).<br>2. Press a blue button to cast your vote.</p>
-                    
-                    <div id="evm-status" class="evm-status red">Wait for Officer...</div>
-                    
-                    <div class="evm-ballot">
-                        <div class="candidate-row">
-                            <span class="cand-name">Candidate A</span>
-                            <button class="evm-btn" data-cand="A" disabled aria-label="Vote for Candidate A"></button>
-                        </div>
-                        <div class="candidate-row">
-                            <span class="cand-name">Candidate B</span>
-                            <button class="evm-btn" data-cand="B" disabled aria-label="Vote for Candidate B"></button>
-                        </div>
-                        <div class="candidate-row">
-                            <span class="cand-name">Candidate C</span>
-                            <button class="evm-btn" data-cand="C" disabled aria-label="Vote for Candidate C"></button>
-                        </div>
-                        <div class="candidate-row">
-                            <span class="cand-name">NOTA</span>
-                            <button class="evm-btn" data-cand="NOTA" disabled aria-label="Vote for None of the Above"></button>
-                        </div>
-                    </div>
-                    
-                    <button id="enable-vote-btn" class="btn primary-btn sim-control">Enable Vote</button>
-                    <button id="reset-sim-btn" class="btn secondary-btn sim-control">Reset Simulation</button>
-                </div>
-
-                <div class="vvpat-card card">
-                    <h3>VVPAT Unit</h3>
-                    <p>Voter Verifiable Paper Audit Trail — watch your slip here.</p>
-                    <div class="vvpat-window">
-                        <div id="vvpat-slip" class="vvpat-slip hidden">
-                            <div class="slip-header">VVPAT SLIP</div>
-                            <div id="slip-cand" class="slip-val">--</div>
-                            <div class="slip-footer">E.C.I. Verified</div>
-                        </div>
-                    </div>
-                    <div class="tally-box">
-                        <h4>Live Simulation Tally</h4>
-                        <div class="tally-row"><span>Cand A:</span> <strong id="tally-A">0</strong></div>
-                        <div class="tally-row"><span>Cand B:</span> <strong id="tally-B">0</strong></div>
-                        <div class="tally-row"><span>Cand C:</span> <strong id="tally-C">0</strong></div>
-                        <div class="tally-row"><span>NOTA:</span> <strong id="tally-NOTA">0</strong></div>
-                    </div>
-                </div>
+        <div class="cards-grid">
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">🏛️</div>
+                <h3>Official Sources Only</h3>
+                <p class="awareness-card-p">Always verify election news and dates directly with the official Election Commission portal. Avoid forwarding WhatsApp rumors.</p>
             </div>
-        </section>
-
-        <!-- Polling Booth Finder (Google Maps Platform) -->
-        <section id="booth-finder" class="booth-finder-section">
-            <h2 class="section-title">Polling Booth Discovery</h2>
-            <p class="section-desc">Powered by Google Maps Platform. Discover election centers near your location.</p>
-            <div class="map-container card">
-                <div id="map-canvas" class="map-placeholder">
-                    <!-- Standard Google Maps Embed for maximum compatibility -->
-                    <iframe 
-                        id="booth-map"
-                        title="Google Map showing polling booth locations"
-                        width="100%" 
-                        height="450" 
-                        style="border:0;" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade"
-                        src="https://www.google.com/maps/embed/v1/search?key=YOUR_API_KEY&q=Polling+Booth+Election+Commission+India">
-                    </iframe>
-                </div>
-                <div class="map-controls">
-                    <input type="text" id="map-search" placeholder="Enter Pincode or Area" aria-label="Search polling booth location">
-                    <button id="map-btn" class="btn primary-btn">📍 Find Near Me</button>
-                    <p id="map-status" class="map-status-msg" aria-live="polite"></p>
-                </div>
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">🕵️</div>
+                <h3>Cross-Check Fact-checkers</h3>
+                <p class="awareness-card-p">If a claim seems outrageous, check reputable fact-checking platforms. Be cautious of emotionally manipulative headlines.</p>
             </div>
-        </section>
-
-        <!-- Emergency Assistant -->
-        <section class="emergency-section">
-            <h2 class="section-title">Election Day Emergencies</h2>
-            <div class="emergency-grid">
-                <button class="emergency-card card" data-type="lost">
-                    <span class="icon">🔍</span>
-                    <h4>Lost Voter ID</h4>
-                </button>
-                <button class="emergency-card card" data-type="missing">
-                    <span class="icon">🚫</span>
-                    <h4>Name Missing</h4>
-                </button>
-                <button class="emergency-card card" data-type="queue">
-                    <span class="icon">⏳</span>
-                    <h4>Long Queue</h4>
-                </button>
-                <button class="emergency-card card" data-type="a11y">
-                    <span class="icon">♿</span>
-                    <h4>Need Ramp/Help</h4>
-                </button>
+            <div class="process-card glass-panel" tabindex="0">
+                <div class="card-icon">📸</div>
+                <h3>Beware Fake Media</h3>
+                <p class="awareness-card-p">Photos and audio can be artificially generated (Deepfakes). Pay attention to irregularities and seek original video contexts.</p>
             </div>
-            <div id="emergency-panel" class="hidden panel card" aria-live="polite"></div>
-        </section>
-
-        <!-- FAQ Section -->
-        <section id="faq" class="faq-section">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <div class="faq-list">
-                <div class="faq-item card">
-                    <button class="faq-question">What is an EPIC card? <span>+</span></button>
-                    <div class="faq-answer">EPIC stands for Electors Photo Identity Card. It is the official voter ID issued by the Election Commission.</div>
-                </div>
-                <div class="faq-item card">
-                    <button class="faq-question">Can NRIs vote? <span>+</span></button>
-                    <div class="faq-answer">Yes, NRIs can vote in their home constituency, but they must be physically present at the polling booth on election day.</div>
-                </div>
-                <div class="faq-item card">
-                    <button class="faq-question">What if I make a mistake on the EVM? <span>+</span></button>
-                    <div class="faq-answer">Once you press a button on the EVM and the beep sounds, your vote is cast. There is no 'undo'—so verify before you press!</div>
-                </div>
-            </div>
-        </section>
-
-    </div>
-
-    <!-- AI Civic Chatbot -->
-    <div id="chat-widget" class="chat-widget">
-        <button id="chat-toggle" class="chat-toggle" aria-label="Open Civic AI Assistant">💬 Ask AI</button>
-        <div id="chat-window" class="chat-window hidden">
-            <div class="chat-header">
-                <h3>Civic Assistant</h3>
-                <button id="chat-close" aria-label="Close">✖</button>
-            </div>
-            <div id="chat-messages" class="chat-messages">
-                <div class="msg bot">Hello! I am VoteGuide AI. Ask me anything about voter registration, eligibility, or polling procedures.</div>
-            </div>
-            <div class="chat-chips">
-                <button class="chip">What is NOTA?</button>
-                <button class="chip">How to register?</button>
-                <button class="chip">Lost my ID</button>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Type a civic question..." aria-label="Chat input">
-                <button id="chat-send" aria-label="Send message">➔</button>
-            </div>
-            <div id="chat-engine-badge" class="chat-engine-badge">Engine: Gemini 1.5 Flash Grounded</div>
         </div>
-    </div>
+    </section>
+
+    <!-- Election Emergency Assistant -->
+    <section id="emergency" class="emergency-section">
+        <div class="section-header">
+            <h2>🆘 Election Emergency Assistant</h2>
+            <p>Facing a sudden issue? Don't panic. Select your problem for instant guidance.</p>
+        </div>
+        <div class="glass-panel emergency-panel">
+            <div class="emergency-btn-row">
+                <button class="btn secondary-btn emergency-btn" data-type="lost-id">Lost Voter ID</button>
+                <button class="btn secondary-btn emergency-btn" data-type="missing-name">Name Missing</button>
+                <button class="btn secondary-btn emergency-btn" data-type="no-booth">Can't Find Booth</button>
+                <button class="btn secondary-btn emergency-btn" data-type="queue">Long Queue</button>
+                <button class="btn secondary-btn emergency-btn" data-type="panic">First-Time Panic</button>
+                <button class="btn secondary-btn emergency-btn" data-type="a11y">Need Ramp/Help</button>
+            </div>
+            <div id="emergency-result" class="glass-panel emergency-result-panel hidden">
+                <h3 id="emergency-title" class="emergency-result-title">[TITLE]</h3>
+                <p id="emergency-desc" class="emergency-result-desc">[SOLUTION]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item glass-panel">
+                <button class="faq-question" aria-expanded="false">How do I register to vote?</button>
+                <div class="faq-answer">
+                    <p>You can register online via your national election portal or physically by submitting the required forms at a local electoral office.</p>
+                </div>
+            </div>
+            <div class="faq-item glass-panel">
+                <button class="faq-question" aria-expanded="false">What ID is needed?</button>
+                <div class="faq-answer">
+                    <p>You typically need a Voter ID card, Passport, Driving License, or other government-approved photo ID.</p>
+                </div>
+            </div>
+            <div class="faq-item glass-panel">
+                <button class="faq-question" aria-expanded="false">Can I vote from another city?</button>
+                <div class="faq-answer">
+                    <p>Usually, you can only vote in the constituency you are registered in. However, postal ballots or special transfers might be available for specific categories.</p>
+                </div>
+            </div>
+            <div class="faq-item glass-panel">
+                <button class="faq-question" aria-expanded="false">Is voting compulsory?</button>
+                <div class="faq-answer">
+                    <p>In most democracies, voting is a civic right, not a legal compulsion. However, participating strengthens democracy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <h3>🗳️ VoteGuide AI</h3>
-                <p>Empowering democracy through intelligent civic tech. Deployed on Google Cloud Run.</p>
-            </div>
-            <div class="footer-links">
-                <h4>Resources</h4>
-                <a href="https://voters.eci.gov.in" target="_blank" rel="noopener">ECI Voter Portal</a>
-                <a href="https://electoralsearch.eci.gov.in" target="_blank" rel="noopener">Search Electoral Roll</a>
-                <a href="https://kyc.eci.gov.in" target="_blank" rel="noopener">Know Your Candidate</a>
-            </div>
-            <div class="footer-legal">
-                <h4>Platform</h4>
-                <p>© 2026 VoteGuide AI</p>
-                <p>Built for Google Cloud × AI Hackathon</p>
-                <a href="#hero">Back to top ↑</a>
-            </div>
-        </div>
+    <footer>
+        <p>&copy; <span id="current-year"></span> VoteGuide AI. Built for the civic tech hackathon.</p>
+        <p class="small-text">Note: This is a demonstration project.</p>
+        <p class="footer-brand">Built for inclusive, reliable civic access.</p>
     </footer>
 
+    <!-- Smart Floating Chatbot -->
+    <div class="chatbot-container">
+        <button id="chat-toggle" aria-label="Open Chat Assistant">
+            <span class="chat-icon">💬</span> Ask AI
+        </button>
+        <div id="chat-widget" class="chat-window hidden glass-panel">
+            <div class="chat-header">
+                <h3>Civic Assistant</h3>
+                <button id="close-chat" aria-label="Close Chat">✖</button>
+            </div>
+            <div class="chat-body" id="chat-body" aria-live="polite">
+                <div class="message assistant">
+                    Hi! I'm VoteGuide AI. How can I help you understand the election process today?
+                </div>
+            </div>
+            <div class="chat-chips-bar">
+                <button class="chat-chip">What is NOTA?</button>
+                <button class="chat-chip">First time voter</button>
+                <button class="chat-chip">How to register?</button>
+            </div>
+            <div class="chat-input-area">
+                <button id="voice-btn" aria-label="Voice Input">🎤</button>
+                <div class="chat-input-wrap">
+                    <input type="text" id="chat-input" class="chat-text-input" placeholder="Type a question... (Press '/' to focus)">
+                    <span id="chat-empty-state" class="hidden chat-empty-hint">“Ask a voting question to continue.”</span>
+                </div>
+                <button id="send-btn" aria-label="Send Message">➤</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
-    <!-- Google Translate Script -->
+    <!-- Google Translate API -->
     <script type="text/javascript">
         function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,hi,bn,te,mr,ta,gu,kn,ml,pa', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+          new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,hi,bn', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
         }
     </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="script.js"></script>
 </body>
 </html>

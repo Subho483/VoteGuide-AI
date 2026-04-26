@@ -1,5 +1,5 @@
 /**
- * VoteGuide AI - Core Application Logic v4.0.0
+ * VoteGuide AI - Core Application Logic
  * Clean, modular, and optimized for performance.
  */
 
@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const body = document.body;
     
+    // Theme Toggle
     const themeBtn = document.getElementById('theme-toggle');
     if (themeBtn) {
         if (localStorage.getItem('theme') === 'dark') body.classList.add('dark-mode');
@@ -58,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Accessibility Toggle
     const a11yBtn = document.getElementById('a11y-toggle');
     if (a11yBtn) {
         if (state.a11yMode) body.classList.add('a11y-mode');
@@ -68,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Mobile Navbar
     const hamburger = document.getElementById('hamburger-menu');
     const navLinks = document.querySelector('.nav-links');
     if (hamburger && navLinks) {
@@ -75,224 +78,593 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 3. CHATBOT INTERFACE (Gemini Grounded)
+    // 3. CHATBOT INTERFACE
     // ==========================================
-    const chatWindow = document.getElementById('chat-window');
+    const chatWidget = document.getElementById('chat-widget');
     const chatToggle = document.getElementById('chat-toggle');
-    const chatClose  = document.getElementById('chat-close');
-    const chatMessages = document.getElementById('chat-messages');
+    const closeChat = document.getElementById('close-chat');
+    const chatBody = document.getElementById('chat-body');
     const chatInput = document.getElementById('chat-input');
-    const chatSend = document.getElementById('chat-send');
-    const chatEngineBadge = document.getElementById('chat-engine-badge');
+    const sendBtn = document.getElementById('send-btn');
+    const voiceBtn = document.getElementById('voice-btn');
 
-    if (chatToggle && chatWindow && chatClose) {
-        chatToggle.addEventListener('click', () => chatWindow.classList.toggle('hidden'));
-        chatClose.addEventListener('click', () => chatWindow.classList.add('hidden'));
+    // Toggle Chat
+    if (chatToggle && chatWidget && closeChat) {
+        chatToggle.addEventListener('click', () => {
+            chatWidget.classList.toggle('hidden');
+            if (!chatWidget.classList.contains('hidden')) {
+                chatInput.focus();
+            }
+        });
+        closeChat.addEventListener('click', () => chatWidget.classList.add('hidden'));
     }
 
-    async function sendMessage() {
-        const text = chatInput.value.trim();
-        if (!text) return;
+    // Quick Chips Logic
+    const chatChips = document.querySelectorAll('.chat-chip');
+    chatChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            if (chatInput) {
+                chatInput.value = chip.textContent;
+                handleChatSubmit();
+            }
+        });
+    });
 
-        addMessage(text, 'user');
-        chatInput.value = '';
-        updateProgress('chat');
+    // Append Message UI
+    function appendMessage(text, sender, id = null) {
+        const div = document.createElement('div');
+        div.className = `message ${sender}`;
+        div.textContent = text;
+        if (id) div.id = id;
+        chatBody.appendChild(div);
+        scrollToBottom();
+    }
 
-        const typing = document.createElement('div');
-        typing.className = 'msg bot typing';
-        typing.textContent = 'AI is researching...';
-        chatMessages.appendChild(typing);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+    function scrollToBottom() {
+        if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+    }
 
+    function speakText(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel(); 
+            const msg = new SpeechSynthesisUtterance(text);
+            const voices = window.speechSynthesis.getVoices();
+            msg.voice = voices.find(v => v.lang.includes('en')) || null;
+            window.speechSynthesis.speak(msg);
+        }
+    }
+
+    // Backend Chat Integration
+    async function fetchChatResponse(prompt) {
         try {
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text })
+                body: JSON.stringify({ message: prompt })
             });
             const data = await response.json();
-            typing.remove();
-            
-            if (data.reply) {
-                addMessage(data.reply, 'bot');
-                if (chatEngineBadge) {
-                    chatEngineBadge.textContent = `Engine: ${data.engine === 'gemini-grounded' ? 'Gemini 1.5 Flash (Grounded)' : 'Civic NLP Engine'}`;
-                }
+            if (response.ok && data.reply) {
+                return data.reply;
             } else {
-                addMessage("I'm having trouble connecting to my civic knowledge base. Please try again.", 'bot');
+                return "Sorry, I couldn't process that right now.";
             }
-        } catch (err) {
-            typing.remove();
-            addMessage("Network error. Please ensure you are online.", 'bot');
+        } catch (error) {
+            console.error("Backend Chat Error:", error);
+            return "Sorry, I am facing network issues connecting to my AI brain. Please check the FAQs.";
         }
     }
 
-    function addMessage(text, type) {
-        const msg = document.createElement('div');
-        msg.className = `msg ${type}`;
-        msg.textContent = text;
-        chatMessages.appendChild(msg);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+    async function handleChatSubmit() {
+        const text = chatInput.value.trim();
+        const emptyState = document.getElementById('chat-empty-state');
+        if (!text) {
+            if (emptyState) emptyState.classList.remove('hidden');
+            return;
+        }
+        if (emptyState) emptyState.classList.add('hidden');
+
+        appendMessage(text, 'user');
+        chatInput.value = '';
+        updateProgress('chat_used');
+
+        appendMessage("Typing...", 'bot', 'typing-indicator');
+
+        const reply = await fetchChatResponse(text);
+        
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) indicator.remove();
+
+        appendMessage(reply, 'bot');
+        speakText(reply);
     }
 
-    if (chatSend) chatSend.addEventListener('click', sendMessage);
+    if (sendBtn) sendBtn.addEventListener('click', handleChatSubmit);
     if (chatInput) {
         chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
+            if (e.key === 'Enter') handleChatSubmit();
         });
     }
 
-    // Chips
-    document.querySelectorAll('.chip').forEach(chip => {
-        chip.addEventListener('click', () => {
-            chatInput.value = chip.textContent;
-            sendMessage();
+    if (voiceBtn && 'webkitSpeechRecognition' in window) {
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'en-US';
+        
+        voiceBtn.addEventListener('click', () => {
+            recognition.start();
+            voiceBtn.textContent = '🔴';
         });
-    });
+        
+        recognition.onresult = (event) => {
+            chatInput.value = event.results[0][0].transcript;
+            handleChatSubmit();
+            voiceBtn.textContent = '🎤';
+        };
+        recognition.onerror = () => voiceBtn.textContent = '🎤';
+        recognition.onend = () => voiceBtn.textContent = '🎤';
+    }
 
     // ==========================================
     // 4. ELIGIBILITY CHECKER
     // ==========================================
-    const checkBtn = document.getElementById('check-btn');
-    const checkResult = document.getElementById('check-result');
+    const eligibilityForm = document.getElementById('eligibility-form');
+    const resultBox = document.getElementById('eligibility-result');
 
-    if (checkBtn) {
-        checkBtn.addEventListener('click', () => {
-            const age = parseInt(document.getElementById('age-input').value);
-            const citizen = document.getElementById('citizen-select').value;
-            const history = document.getElementById('history-select').value;
-
-            if (!age) {
-                checkResult.textContent = "Please enter your age first.";
-                checkResult.className = "result-panel warning";
-                checkResult.classList.remove('hidden');
+    if (eligibilityForm && resultBox) {
+        eligibilityForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const ageInput = document.getElementById('age').value;
+            const emptyState = document.getElementById('eligibility-empty-state');
+            if (!ageInput) {
+                if (emptyState) emptyState.classList.remove('hidden');
+                resultBox.classList.add('hidden');
                 return;
             }
+            if (emptyState) emptyState.classList.add('hidden');
+            const age = parseInt(ageInput);
+            const citizen = document.getElementById('citizen').value;
+            const history = document.getElementById('history').value;
 
-            let msg = "";
-            let type = "success";
+            resultBox.classList.remove('hidden', 'success-msg', 'error-msg');
+            updateProgress('eligibility_checked');
 
             if (age < 18) {
-                msg = "❌ You are not eligible yet. You must be 18 to vote. Keep learning!";
-                type = "error";
-            } else if (citizen === 'no') {
-                msg = "❌ Voting in national elections requires citizenship. Check local resident rules.";
-                type = "error";
-            } else {
-                msg = history === 'first' 
-                    ? "✅ You are eligible! Please register via Form 6 on the Voter Portal immediately."
-                    : "✅ You are eligible! Ensure your name is in the local electoral roll.";
+                resultBox.classList.add('error-msg');
+                resultBox.innerHTML = `<strong>Not Eligible:</strong> You must be at least 18 years old. Wait a bit longer!`;
+            } else if (citizen !== 'yes') {
+                resultBox.classList.add('error-msg');
+                resultBox.innerHTML = `<strong>Not Eligible:</strong> Only citizens can vote in national elections.`;
+            } else if (history === 'no') {
+                resultBox.classList.add('success-msg');
+                resultBox.innerHTML = `<strong>Eligible!</strong> Since you are a first-time voter, you need to Register first. Head to the Official Portal.`;
                 triggerConfetti();
-                updateProgress('eligibility');
+            } else {
+                resultBox.classList.add('success-msg');
+                resultBox.innerHTML = `<strong>Eligible!</strong> You are good to go. Make sure to check your name on the voter list before polling day.`;
+                triggerConfetti();
             }
-
-            checkResult.textContent = msg;
-            checkResult.className = `result-panel ${type}`;
-            checkResult.classList.remove('hidden');
         });
     }
 
     // ==========================================
-    // 5. MAP FINDER
+    // 5. PROCESS CARDS & FAQ ACCORDION
     // ==========================================
-    const mapBtn = document.getElementById('map-btn');
-    const mapSearch = document.getElementById('map-search');
-    const boothMap = document.getElementById('booth-map');
-    const mapStatus = document.getElementById('map-status');
+    const processCards = document.querySelectorAll('.process-card');
+    processCards.forEach((card, index) => {
+        const toggleCard = () => {
+            card.classList.toggle('active');
+            updateProgress(`card_${index}`);
+        };
+        card.addEventListener('click', toggleCard);
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleCard();
+            }
+        });
+    });
 
-    if (mapBtn && mapSearch && boothMap) {
-        mapBtn.addEventListener('click', () => {
-            const val = mapSearch.value.trim();
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const btn = item.querySelector('.faq-question');
+        if(btn) {
+            btn.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => {
+                    i.classList.remove('active');
+                    const qBtn = i.querySelector('.faq-question');
+                    if (qBtn) qBtn.setAttribute('aria-expanded', 'false');
+                });
+                if (!isActive) {
+                    item.classList.add('active');
+                    btn.setAttribute('aria-expanded', 'true');
+                }
+            });
+        }
+    });
+
+    // ==========================================
+    // 6. CIVIC QUIZ
+    // ==========================================
+    const quizBtns = document.querySelectorAll('.quiz-btn');
+    const quizResult = document.getElementById('quiz-result');
+    if (quizBtns.length > 0 && quizResult) {
+        quizBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const isCorrect = btn.getAttribute('data-correct') === 'true';
+                quizResult.classList.remove('hidden');
+                if (isCorrect) {
+                    quizResult.innerHTML = `✅ <strong>Correct!</strong> You must be at least 18 years old to vote. Well done!`;
+                    quizResult.className = 'result-box success-msg';
+                    triggerConfetti();
+                } else {
+                    quizResult.innerHTML = `❌ <strong>Incorrect.</strong> The minimum voting age is 18 — at 17 you are not yet eligible.`;
+                    quizResult.className = 'result-box error-msg';
+                }
+                // Highlight selected, dim others
+                quizBtns.forEach(b => {
+                    b.disabled = true;
+                    b.style.opacity = b === btn ? '1' : '0.4';
+                });
+                updateProgress('quiz_completed');
+            });
+        });
+    }
+
+    // ==========================================
+    // 7. ELECTION REMINDER (.ICS DOWNLOAD)
+    // ==========================================
+    const reminderBtn = document.getElementById('reminder-btn');
+    if (reminderBtn) {
+        reminderBtn.addEventListener('click', () => {
+            const icsContent = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//VoteGuide AI//EN\nBEGIN:VEVENT\nSUMMARY:Election Day Reminder\nDESCRIPTION:Don't forget to cast your vote today! Check your polling booth via VoteGuide AI.\nDTSTART;VALUE=DATE:20261103\nEND:VEVENT\nEND:VCALENDAR";
+            const blob = new Blob([icsContent], { type: 'text/calendar' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Election_Reminder.ics';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            const originalText = reminderBtn.innerHTML;
+            reminderBtn.innerHTML = '✅ Saved!';
+            setTimeout(() => reminderBtn.innerHTML = originalText, 3000);
+        });
+    }
+
+    // ==========================================
+    // 8. SMART POLLING BOOTH SEARCH
+    // ==========================================
+    const pincodeBtn = document.getElementById('pincode-btn');
+    const pincodeInput = document.getElementById('pincode-input');
+    const mapIframe = document.getElementById('map-iframe');
+    
+    if (pincodeBtn && pincodeInput && mapIframe) {
+        const executeSearch = () => {
+            const val = pincodeInput.value.trim();
+            const status = document.getElementById('map-status');
             if (!val) {
-                mapStatus.textContent = "Please enter a pincode or area.";
+                if (status) {
+                    status.textContent = "“Enter pincode or location.”";
+                    status.classList.remove('hidden');
+                }
                 return;
             }
-            mapStatus.textContent = "Searching near " + val + "...";
-            // Upgrade to dynamic search via Embed API
-            boothMap.src = `https://www.google.com/maps/embed/v1/search?key=YOUR_API_KEY&q=${encodeURIComponent(val)}+Polling+Booth+Election+Commission`;
-            updateProgress('map');
+            if (status) {
+                status.textContent = "Loading map...";
+                status.classList.remove('hidden');
+            }
+            setTimeout(() => {
+                mapIframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(val)}+Polling+Booth&t=&z=14&ie=UTF8&output=embed`;
+                if (status) status.classList.add('hidden');
+            }, 800);
+        };
+        pincodeBtn.addEventListener('click', executeSearch);
+        pincodeInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') executeSearch();
         });
     }
 
     // ==========================================
-    // 6. SIMULATION LAB
+    // 9. AI DEBATE SIMULATOR
     // ==========================================
-    const enableVoteBtn = document.getElementById('enable-vote-btn');
-    const resetSimBtn = document.getElementById('reset-sim-btn');
-    const evmStatus = document.getElementById('evm-status');
-    const evmButtons = document.querySelectorAll('.evm-btn');
-    const vvpatSlip = document.getElementById('vvpat-slip');
-    const slipCand = document.getElementById('slip-cand');
+    const debateData = {
+        'online': {
+            pro: 'Increases accessibility, convenience, and potentially massive turnout for younger voters.',
+            neutral: 'A digital transition requires balancing extreme convenience against absolute security necessities.',
+            con: 'High risk of cyber manipulation, deep state hacking, and loss of secret ballot integrity.'
+        },
+        'compulsory': {
+            pro: 'Ensures the elected government truly reflects the will of the entire population.',
+            neutral: 'Raises the question of whether voting is a strict civic duty or a democratic choice.',
+            con: 'Forces disengaged or grossly uninformed citizens to vote, potentially leading to random elections.'
+        },
+        'youth': {
+            pro: 'Engages the next generation in policies that will directly affect their entire future trajectory.',
+            neutral: 'Youth are passionate but may lack historical perspective; integrating them requires intensive civic education.',
+            con: 'Younger demographics can be too easily swayed by viral social media trends or influencers.'
+        },
+        'nota': {
+            pro: 'Provides a powerful democratic megaphone to express systemic dissatisfaction without boycotting.',
+            neutral: 'Primarily a symbolic gesture in many systems, unless NOTA majorities trigger mandatory re-elections.',
+            con: 'Can dilute valid votes, potentially allowing less popular candidates to win through fractured polling.'
+        }
+    };
 
-    const tally = { A: 0, B: 0, C: 0, NOTA: 0 };
+    const debateBtns = document.querySelectorAll('.debate-btn');
+    const proText = document.getElementById('debate-pro');
+    const neutralText = document.getElementById('debate-neutral');
+    const conText = document.getElementById('debate-con');
 
-    if (enableVoteBtn) {
-        enableVoteBtn.addEventListener('click', () => {
-            evmStatus.textContent = "Ready to Vote";
-            evmStatus.className = "evm-status green";
-            evmButtons.forEach(b => b.disabled = false);
+    if(debateBtns.length > 0) {
+        debateBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                debateBtns.forEach(b => {
+                    b.classList.remove('primary-btn');
+                    b.classList.add('secondary-btn');
+                });
+                btn.classList.add('primary-btn');
+                btn.classList.remove('secondary-btn');
+
+                const topic = btn.getAttribute('data-topic');
+                if(debateData[topic]) {
+                    proText.textContent = debateData[topic].pro;
+                    neutralText.textContent = debateData[topic].neutral;
+                    conText.textContent = debateData[topic].con;
+                }
+            });
         });
     }
 
-    evmButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const cand = btn.getAttribute('data-cand');
-            tally[cand]++;
-            document.getElementById(`tally-${cand}`).textContent = tally[cand];
+    // ==========================================
+    // 10. ELECTION EMERGENCY ASSISTANT
+    // ==========================================
+    const emergencyData = {
+        'lost-id': { title: 'Lost Voter ID (EPIC)?', solution: 'Don\'t panic! You can still vote. Bring any state-approved alternative ID: Aadhar Card, Driver\'s License, Passport, or PAN Card.' },
+        'missing-name': { title: 'Name Missing from List?', solution: 'Check with the Booth Level Officer (BLO). If you have an EPIC but your name is missing due to a clerical delete, standardly you cannot vote today. File a dispute form for the next cycle.' },
+        'no-booth': { title: 'Can\'t Find Your Booth?', solution: 'Use our Smart Pincode tool above, or SMS "EPIC <Your Voter ID Number>" to the Election Commission hotline (1950) to instantly get your booth address.' },
+        'queue': { title: 'Long Queues?', solution: 'If you join the queue before the official closing time (usually 6 PM), the officers are legally required to let you vote, regardless of how late it gets. Stay in line!' },
+        'panic': { title: 'First-Time Panic?', solution: 'Take a deep breath! Approach the first officer, show your ID, and they will direct you step-by-step. Nobody is judging you.' },
+        'a11y': { title: 'Require Accessibility Support?', solution: 'By law, all polling booths must have wheelchair ramps. Look for the Presiding Officer to request priority access or companion assistance.' }
+    };
 
-            // VVPAT Flow
-            slipCand.textContent = cand;
-            vvpatSlip.classList.remove('hidden');
-            evmButtons.forEach(b => b.disabled = true);
-            evmStatus.textContent = "Vote Recorded";
-            evmStatus.className = "evm-status blue";
+    const emergencyBtns = document.querySelectorAll('.emergency-btn');
+    const emergencyResult = document.getElementById('emergency-result');
+    const emergencyTitle = document.getElementById('emergency-title');
+    const emergencyDesc = document.getElementById('emergency-desc');
+
+    if (emergencyBtns.length > 0 && emergencyResult) {
+        emergencyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const type = btn.getAttribute('data-type');
+                if(emergencyData[type]) {
+                    emergencyTitle.textContent = emergencyData[type].title;
+                    emergencyDesc.textContent = emergencyData[type].solution;
+                    emergencyResult.classList.remove('hidden');
+                    emergencyResult.style.display = 'block';
+                }
+            });
+        });
+    }
+
+    // Set Copyright Year
+    const yearSpan = document.getElementById('current-year');
+    if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+    // ==========================================
+    // 11. DEMO MODE & CHECKLIST
+    // ==========================================
+    const demoBtn = document.getElementById('demo-btn');
+    if (demoBtn) {
+        demoBtn.addEventListener('click', () => {
+            demoBtn.textContent = '🚀 Running Demo...';
+            demoBtn.disabled = true;
+            
+            document.getElementById('eligibility').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                document.getElementById('age').value = '21';
+                document.getElementById('citizen').value = 'yes';
+                document.getElementById('history').value = 'no';
+                if (eligibilityForm) eligibilityForm.dispatchEvent(new Event('submit', { cancelable: true }));
+            }, 1500);
 
             setTimeout(() => {
-                vvpatSlip.classList.add('hidden');
-                evmStatus.textContent = "Wait for Officer...";
-                evmStatus.className = "evm-status red";
-                updateProgress('sim');
-            }, 5000);
-        });
-    });
+                if (chatToggle) chatToggle.click();
+                if (chatInput) chatInput.value = 'What is NOTA?';
+            }, 3500);
+            setTimeout(() => { if (sendBtn) sendBtn.click(); }, 5000);
 
-    if (resetSimBtn) {
-        resetSimBtn.addEventListener('click', () => {
-            Object.keys(tally).forEach(k => {
-                tally[k] = 0;
-                document.getElementById(`tally-${k}`).textContent = '0';
-            });
-            evmStatus.textContent = "Wait for Officer...";
-            evmStatus.className = "evm-status red";
-            evmButtons.forEach(b => b.disabled = true);
-            vvpatSlip.classList.add('hidden');
+            setTimeout(() => {
+                if (closeChat) closeChat.click();
+                document.getElementById('pincode-input').value = '700001';
+                if (pincodeBtn) pincodeBtn.click();
+            }, 9000);
+
+            setTimeout(() => {
+                document.getElementById('quick-links').scrollIntoView({ behavior: 'smooth' });
+                demoBtn.textContent = '🚀 Try Demo';
+                demoBtn.disabled = false;
+            }, 12000);
+        });
+    }
+
+    const checklistBtn = document.getElementById('checklist-btn');
+    if (checklistBtn) {
+        checklistBtn.addEventListener('click', () => {
+            checklistBtn.textContent = 'Preparing...';
+            setTimeout(() => {
+                const text = "🗳️ VOTEGUIDE AI - OFFICIAL VOTER CHECKLIST 🗳️\n\n1. ✅ Carry Valid ID (Voter ID, Passport, or DL)\n2. ✅ Verify Booth Location in Advance\n3. ✅ Reach Early to Avoid Long Queues\n4. ✅ Follow Polling Booth Queue Rules\n5. ✅ Cast Your Secret Vote\n6. ✅ Help Others Responsibly\n\nDemocracy works when you participate!";
+                const blob = new Blob([text], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'Voter_Checklist.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                checklistBtn.textContent = '📄 Download Checklist';
+            }, 800);
         });
     }
 
     // ==========================================
-    // 7. EMERGENCY & FAQ
+    // 12. METRICS ANIMATION & KEYBOARD SHORTCUTS
     // ==========================================
-    document.querySelectorAll('.emergency-card').forEach(card => {
-        card.addEventListener('click', () => {
-            const type = card.getAttribute('data-type');
-            const panel = document.getElementById('emergency-panel');
-            let content = "";
+    const counters = document.querySelectorAll('.counter');
+    if (counters.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = +counter.getAttribute('data-target');
+                    let current = 0;
+                    const increment = target / 40;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            counter.textContent = target.toLocaleString() + "+";
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = Math.ceil(current).toLocaleString();
+                        }
+                    }, 30);
+                    observer.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(counter => observer.observe(counter));
+    }
 
-            if (type === 'lost') content = "<h4>Lost Voter ID</h4><p>You can still vote! Bring any government photo ID (Passport, DL, Aadhaar) if your name is in the electoral roll.</p>";
-            if (type === 'missing') content = "<h4>Name Missing</h4><p>Immediately contact the Booth Level Officer (BLO). If your name is truly missing, you cannot vote today but should register for the next cycle.</p>";
-            if (type === 'queue') content = "<h4>Long Queue</h4><p>If you join the line before official closing time, you are legally entitled to cast your vote even after hours.</p>";
-            if (type === 'a11y') content = "<h4>Need Ramp</h4><p>All polling stations must have ramps. Inform the presiding officer for priority access or assistance.</p>";
-
-            panel.innerHTML = content;
-            panel.classList.remove('hidden');
-            updateProgress('emergency');
-        });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && chatWidget && !chatWidget.classList.contains('hidden')) {
+            closeChat.click();
+        }
+        if (e.key === '/' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+            if (chatWidget && chatWidget.classList.contains('hidden')) chatToggle.click();
+            else if (chatInput) chatInput.focus();
+        }
     });
 
-    document.querySelectorAll('.faq-question').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const item = btn.parentElement;
-            item.classList.toggle('active');
+    // ==========================================
+    // 13. ELECTION SIMULATION LAB
+    // ==========================================
+    const simState = {
+        voteEnabled: false,
+        voted: false,
+        tally: { 'Candidate A': 0, 'Candidate B': 0, 'Candidate C': 0, 'NOTA': 0 },
+        vvpatTimer: null
+    };
+
+    const enableVoteBtn  = document.getElementById('enable-vote-btn');
+    const controlStatus  = document.getElementById('control-status');
+    const candidateBtns  = document.querySelectorAll('.sim-candidate-btn');
+    const vvpatSlip      = document.getElementById('vvpat-slip');
+    const vvpatText      = document.getElementById('vvpat-candidate-text');
+    const vvpatTimerEl   = document.getElementById('vvpat-timer');
+    const vvpatIdle      = document.getElementById('vvpat-idle-text');
+    const simResetBtn    = document.getElementById('sim-reset-btn');
+    const tallyTotal     = document.getElementById('tally-total');
+
+    const tallyMap = {
+        'Candidate A': document.getElementById('tally-a'),
+        'Candidate B': document.getElementById('tally-b'),
+        'Candidate C': document.getElementById('tally-c'),
+        'NOTA':        document.getElementById('tally-nota')
+    };
+
+    function simBumpCount(el) {
+        el.classList.add('bump');
+        setTimeout(() => el.classList.remove('bump'), 250);
+    }
+
+    function simEnableVoting() {
+        if (simState.voted) return; // already voted this round, wait for reset
+        simState.voteEnabled = true;
+        enableVoteBtn.disabled = true;
+        enableVoteBtn.textContent = '✅ Vote Enabled';
+        controlStatus.textContent = '🟢 Voting Enabled';
+        controlStatus.classList.replace('sim-status--idle', 'sim-status--active');
+        candidateBtns.forEach(btn => btn.disabled = false);
+    }
+
+    function simCastVote(candidate) {
+        if (!simState.voteEnabled || simState.voted) return;
+        simState.voted = true;
+
+        // Highlight selected button
+        candidateBtns.forEach(btn => {
+            btn.disabled = true;
+            btn.classList.remove('selected');
+            if (btn.dataset.candidate === candidate) btn.classList.add('selected');
         });
+
+        // Show VVPAT
+        vvpatText.innerHTML = `You voted for: <strong>${candidate}</strong>`;
+        vvpatIdle.classList.add('hidden');
+        vvpatSlip.classList.remove('hidden');
+
+        // Countdown
+        let seconds = 3;
+        vvpatTimerEl.textContent = seconds;
+        clearInterval(simState.vvpatTimer);
+        simState.vvpatTimer = setInterval(() => {
+            seconds--;
+            if (vvpatTimerEl) vvpatTimerEl.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(simState.vvpatTimer);
+                vvpatSlip.classList.add('hidden');
+                vvpatIdle.classList.remove('hidden');
+                vvpatIdle.textContent = '✅ Vote sealed in EVM.';
+                vvpatIdle.style.background = '#d1fae5';
+                vvpatIdle.style.color = '#065f46';
+            }
+        }, 1000);
+
+        // Update tally
+        simState.tally[candidate]++;
+        const el = tallyMap[candidate];
+        if (el) {
+            el.textContent = simState.tally[candidate];
+            simBumpCount(el);
+        }
+        const total = Object.values(simState.tally).reduce((a, b) => a + b, 0);
+        if (tallyTotal) tallyTotal.textContent = total;
+
+        // Lock Control Unit button label
+        controlStatus.textContent = '🔴 Vote Cast — Awaiting Reset';
+        controlStatus.classList.replace('sim-status--active', 'sim-status--idle');
+    }
+
+    function simReset() {
+        simState.voteEnabled = false;
+        simState.voted = false;
+        clearInterval(simState.vvpatTimer);
+
+        enableVoteBtn.disabled = false;
+        enableVoteBtn.textContent = 'Enable Vote';
+        controlStatus.textContent = '🔴 Voting Disabled';
+        // Forcefully set idle class regardless of current state
+        controlStatus.className = 'sim-status sim-status--idle';
+
+        candidateBtns.forEach(btn => {
+            btn.disabled = true;
+            btn.classList.remove('selected');
+        });
+
+        vvpatSlip.classList.add('hidden');
+        vvpatIdle.classList.remove('hidden');
+        vvpatIdle.textContent = 'Awaiting vote…';
+        vvpatIdle.style.background = '';
+        vvpatIdle.style.color = '';
+    }
+
+    if (enableVoteBtn)  enableVoteBtn.addEventListener('click', simEnableVoting);
+    if (simResetBtn)    simResetBtn.addEventListener('click', simReset);
+    candidateBtns.forEach(btn => {
+        btn.addEventListener('click', () => simCastVote(btn.dataset.candidate));
     });
+
 });
