@@ -1,0 +1,44 @@
+steps:
+  # Step 1: Install Node.js dependencies
+  - name: 'node:18'
+    entrypoint: npm
+    args: ['ci']
+
+  # Step 2: Run the test suite
+  - name: 'node:18'
+    entrypoint: npm
+    args: ['test']
+
+  # Step 3: Build and push container image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/voteguide-ai:$COMMIT_SHA'
+      - '.'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/voteguide-ai:$COMMIT_SHA'
+
+  # Step 4: Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'voteguide-ai'
+      - '--image'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/voteguide-ai:$COMMIT_SHA'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/voteguide-ai:$COMMIT_SHA'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

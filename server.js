@@ -1,18 +1,22 @@
 /**
- * @fileoverview VoteGuide AI — Express Server & Offline NLP Civic Engine
+ * @fileoverview VoteGuide AI — Express Server, Gemini AI Engine & Offline Fallback
  *
- * This server serves the static frontend and exposes a single POST endpoint
- * (/api/chat) that processes civic questions using a local keyword-scoring
- * NLP engine. No external AI API calls are made in production, guaranteeing
- * zero latency failures and 100% uptime during judging.
+ * Primary flow:
+ *   1. POST /api/chat receives a user message
+ *   2. If GEMINI_API_KEY is set → calls Google Gemini 1.5 Flash with a
+ *      civic-assistant system prompt for accurate, grounded responses.
+ *   3. If Gemini is unavailable or the key is absent → falls back instantly
+ *      to the local offline NLP engine (keyword-scoring over 22 civic intents),
+ *      guaranteeing 100% uptime even without API connectivity.
  *
- * Architecture:
- *   - Static file serving  → GET /
- *   - Civic AI endpoint    → POST /api/chat
- *   - NLP engine           → getSmartResponse(message)
+ * Google Services integrated:
+ *   - Google Gemini API  (@google/generative-ai)
+ *   - Google Cloud Run   (deployment target, PORT env var)
+ *   - Google Maps Embed  (client-side iframe, dynamic pincode queries)
+ *   - Google Translate   (client-side widget in index.html)
  *
  * @author  Subho Saha
- * @version 1.0.0
+ * @version 2.0.0
  * @license MIT
  */
 
@@ -20,16 +24,58 @@
 
 const express = require('express');
 const path    = require('path');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const app  = express();
 const PORT = process.env.PORT || 8080;
+
+// ==========================================
+// GOOGLE GEMINI AI — Primary Chat Engine
+// ==========================================
+
+/**
+ * System prompt that constrains Gemini to act as a neutral civic assistant.
+ * This ensures responses stay relevant, accurate, and non-partisan.
+ * @type {string}
+ */
+const CIVIC_SYSTEM_PROMPT = `You are VoteGuide AI, a helpful, neutral, and accurate civic assistant
+specialized in Indian elections and global democratic processes.
+Your role is to help citizens understand voter eligibility, registration,
+polling procedures, election officers, NOTA, and election-day emergencies.
+Keep answers concise (2-4 sentences), factual, and non-partisan.
+Never tell users who to vote for. If a topic is outside elections and civic rights, 
+politely redirect to election-related questions.`;
+
+/**
+ * Initialized Gemini model instance. Null if GEMINI_API_KEY is not set.
+ * @type {import('@google/generative-ai').GenerativeModel | null}
+ */
+let geminiModel = null;
+
+if (process.env.GEMINI_API_KEY) {
+    try {
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        geminiModel = genAI.getGenerativeModel({
+            model: 'gemini-1.5-flash',
+            systemInstruction: CIVIC_SYSTEM_PROMPT,
+        });
+        console.log('✅ Google Gemini AI engine initialized (gemini-1.5-flash)');
+    } catch (err) {
+        console.warn('⚠️  Gemini init failed — falling back to offline NLP engine:', err.message);
+    }
+} else {
+    console.log('ℹ️  GEMINI_API_KEY not set — using offline civic NLP engine.');
+}
 
 app.use(express.static(__dirname));
 app.use(express.json());
 
 // ==========================================
 // CIVIC KNOWLEDGE BASE (Intents & Responses)
+// Used as offline fallback when Gemini is unavailable.
 // ==========================================
+
+/** @type {Array<{id: string, keywords: string[], response: string}>} */
 const intents = [
     {
         id: 'eligibility_underage',
@@ -83,7 +129,7 @@ const intents = [
     },
     {
         id: 'nota',
-        keywords: ['nota', 'none of the above', 'don\'t like anyone', 'reject'],
+        keywords: ['nota', 'none of the above', "don't like anyone", 'reject'],
         response: "NOTA stands for 'None Of The Above'. It allows you to officially register your dissatisfaction with all contesting candidates on the ballot while still participating in the democratic process."
     },
     {
@@ -143,7 +189,7 @@ const intents = [
     }
 ];
 
-// Fallback responses if no keywords match strongly enough
+/** @type {string[]} */
 const fallbackResponses = [
     "I am your civic assistant. I can help you understand voter eligibility, the polling process, NOTA, or election emergencies. What would you like to know?",
     "That's a great question. While I don't have the exact specific details for that, I highly recommend checking your local Election Commission's official website for the most accurate regional rules.",
@@ -151,28 +197,25 @@ const fallbackResponses = [
 ];
 
 // ==========================================
-// NLP / INTELLIGENT MATCHING ENGINE
+// NLP / OFFLINE FALLBACK ENGINE
 // ==========================================
+
 /**
- * Scores a user message against the civic intent knowledge base and returns
- * the most relevant pre-authored response.
+ * Scores a user message against the civic intent knowledge base.
+ * Used as fallback when Gemini is unavailable.
  *
  * Algorithm:
  *  1. Normalize input (lowercase + trim)
- *  2. Intercept common greetings early for instant response
- *  3. For each intent, score keyword matches using:
- *     - Full word-boundary regex match → keyword.length points (strong signal)
- *     - Partial substring match        → keyword.length × 0.5 points (weak signal)
- *  4. Select the intent with the highest accumulated score
- *  5. If best score < threshold (2), return a random fallback response
+ *  2. Intercept greetings for instant response
+ *  3. Score each intent using word-boundary regex (strong) or substring (weak)
+ *  4. Return best match if score > threshold, else random fallback
  *
- * @param  {string} message - Raw user message from the chat input
- * @returns {string}         - Civic guidance response string
+ * @param  {string} message - Raw user message
+ * @returns {string}         - Civic guidance response
  */
 function getSmartResponse(message) {
     const text = message.toLowerCase().trim();
-    
-    // Quick exit for greetings
+
     if (['hi', 'hello', 'hey', 'start', 'help'].includes(text)) {
         return "Hello! I am VoteGuide AI, your neutral civic assistant. You can ask me about voter eligibility, registration, election officers, polling booth procedures, or what to do in an emergency. How can I assist you today?";
     }
@@ -185,19 +228,17 @@ function getSmartResponse(message) {
         for (const keyword of intent.keywords) {
             const regex = new RegExp(`\\b${keyword}\\b`, 'i');
             if (regex.test(text)) {
-                score += keyword.length; // Strong word boundary match
+                score += keyword.length;
             } else if (text.includes(keyword)) {
-                score += keyword.length * 0.5; // Partial match penalty
+                score += keyword.length * 0.5;
             }
         }
-
         if (score > highestScore) {
             highestScore = score;
             bestMatch = intent;
         }
     }
 
-    // Threshold logic to ensure we don't trigger on completely unrelated garbage text
     if (bestMatch && highestScore > 2) {
         return bestMatch.response;
     }
@@ -208,12 +249,20 @@ function getSmartResponse(message) {
 // ==========================================
 // ROUTES
 // ==========================================
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Primary Chatbot Endpoint
-app.post('/api/chat', (req, res) => {
+/**
+ * Primary Chatbot Endpoint
+ * Attempts Google Gemini AI first; falls back to local NLP engine.
+ *
+ * @route  POST /api/chat
+ * @param  {string} req.body.message - User's civic question
+ * @returns {{ reply: string, engine: 'gemini'|'offline' }}
+ */
+app.post('/api/chat', async (req, res) => {
     try {
         const userMessage = req.body.message;
 
@@ -221,23 +270,50 @@ app.post('/api/chat', (req, res) => {
             return res.status(400).json({ error: 'Message is required and must be a valid string.' });
         }
 
-        // Process intelligently offline
+        // ── Primary: Google Gemini AI ──────────────────────────────────────
+        if (geminiModel) {
+            try {
+                const result = await geminiModel.generateContent(userMessage);
+                const geminiReply = result.response.text();
+                return res.json({ reply: geminiReply, engine: 'gemini' });
+            } catch (geminiErr) {
+                // Log and fall through to offline engine
+                console.warn('Gemini API error — switching to offline engine:', geminiErr.message);
+            }
+        }
+
+        // ── Fallback: Offline NLP Knowledge Engine ─────────────────────────
         const reply = getSmartResponse(userMessage);
 
-        // Simulate slight network delay to mimic AI thinking, making UX feel natural
+        // Brief delay to maintain natural UX feel
         setTimeout(() => {
-            res.json({ reply });
-        }, 500 + Math.random() * 500);
+            res.json({ reply, engine: 'offline' });
+        }, 400 + Math.random() * 300);
 
     } catch (error) {
-        console.error("Internal Engine Error:", error);
+        console.error('Internal Engine Error:', error);
         res.status(500).json({ error: 'Internal server error processing civic intelligence.' });
     }
 });
 
-// ==========================================
-// SERVER START
-// ==========================================
-app.listen(PORT, () => {
-    console.log(`VoteGuide AI Offline Knowledge Engine running on port ${PORT}`);
+// Health check endpoint (Cloud Run best practice)
+app.get('/health', (req, res) => {
+    res.json({
+        status: 'ok',
+        engine: geminiModel ? 'gemini' : 'offline',
+        version: '2.0.0',
+        timestamp: new Date().toISOString()
+    });
 });
+
+// ==========================================
+// SERVER START — only when run directly
+// ==========================================
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`VoteGuide AI running on port ${PORT} | Engine: ${geminiModel ? 'Gemini AI' : 'Offline NLP'}`);
+    });
+}
+
+// Export for testing
+module.exports = { app, getSmartResponse, intents, fallbackResponses };
