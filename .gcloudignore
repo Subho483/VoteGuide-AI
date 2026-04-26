@@ -1,0 +1,29 @@
+# .gcloudignore — files to exclude from Cloud Run source upload
+# This mirrors .gitignore but Cloud Run uses this file specifically
+
+# Exclude development dependencies and local state
+node_modules/
+.git/
+.gitignore
+
+# Exclude test files from production build (server still exports for tests)
+# Tests run in CI (cloudbuild.yaml), not in the Cloud Run container
+tests/
+
+# Exclude editor and OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Exclude environment files (secrets injected via Cloud Run env vars)
+.env
+.env.local
+
+# Exclude documentation (not needed in container)
+*.md
+!README.md
+
+# Exclude build artifacts
+dist/
+build/
