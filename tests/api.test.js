@@ -125,8 +125,8 @@ describe('POST /api/chat', () => {
     test('returns engine field in response', async () => {
         const { status, data } = await request('POST', '/api/chat', { message: 'how to vote?' });
         assert.equal(status, 200);
-        assert.ok(['gemini', 'offline'].includes(data.engine),
-            `engine must be 'gemini' or 'offline', got: ${data.engine}`);
+        assert.ok(['gemini-1.5-flash', 'offline-nlp'].includes(data.engine),
+            `engine must be 'gemini-1.5-flash' or 'offline-nlp', got: ${data.engine}`);
     });
 });
 
@@ -144,8 +144,8 @@ describe('GET /health', () => {
 
     test('health response includes engine field', async () => {
         const { data } = await request('GET', '/health');
-        assert.ok(['gemini', 'offline'].includes(data.engine),
-            `engine must be 'gemini' or 'offline', got: ${data.engine}`);
+        assert.ok(['gemini-1.5-flash', 'offline-nlp'].includes(data.engine),
+            `engine must be 'gemini-1.5-flash' or 'offline-nlp', got: ${data.engine}`);
     });
 
     test('health response includes version', async () => {

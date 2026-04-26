@@ -1,7 +1,49 @@
 /*
-   VoteGuide AI - Main Stylesheet
+   VoteGuide AI — Main Stylesheet v3.0.0
    Design: Premium Civic Glassmorphism — Dark/Light, Fully Responsive
+   Accessibility: WCAG 2.1 AA compliant — skip nav, focus rings, high contrast
 */
+
+/* =====================================================
+   ACCESSIBILITY: SKIP NAVIGATION (WCAG 2.4.1)
+   Visually hidden until focused — screen reader & keyboard friendly
+   ===================================================== */
+.skip-nav {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    z-index: 10000;
+    padding: 0.75rem 1.5rem;
+    background: var(--primary-color, #1a56db);
+    color: #ffffff;
+    border-radius: 0 0 8px 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: top 0.2s ease;
+}
+.skip-nav:focus {
+    top: 0;
+    outline: 3px solid #f59e0b;
+    outline-offset: 2px;
+}
+
+/* =====================================================
+   ACCESSIBILITY: FOCUS VISIBLE (WCAG 2.4.7)
+   ===================================================== */
+:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
+}
 
 :root {
     --primary-color: #1a56db;
