@@ -901,15 +901,20 @@ footer p + p { margin-top: 0.35rem; }
     color: var(--text-muted);
 }
 .trust-badge {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    padding: 0.45rem 1.1rem;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
     white-space: nowrap;
+    transition: all 0.2s ease;
 }
 .trust-badge:hover {
-    color: var(--primary-color);
-    transform: translateY(-1px);
-    transition: all 0.2s ease;
+    transform: translateY(-2px);
+    box-shadow: var(--glass-shadow);
 }
 
 /* Chat Engine Badge */
@@ -923,16 +928,6 @@ footer p + p { margin-top: 0.35rem; }
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-}
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.45rem 1.1rem;
-    border-radius: 20px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    white-space: nowrap;
 }
 .trust-badge--cloud   { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
 .trust-badge--offline { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
